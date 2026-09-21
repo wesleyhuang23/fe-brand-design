@@ -30,7 +30,7 @@ Three things were added on 2026-09-21:
 
 ## 2. The accent switcher
 
-A fixed button, bottom-right, that opens a panel with one dropdown per accent. Each dropdown
+A fixed button, bottom-left, that opens a panel with one dropdown per accent. Each dropdown
 lists the seasonal palette from Figma plus a `Custom…` option that reveals a color/hex input.
 
 ### Which variables it drives
