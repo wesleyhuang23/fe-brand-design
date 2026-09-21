@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Summer v2 Mockups</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Figtree:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fbfbf8;
+      --ink: #231f1c;
+      --ink-soft: #77716c;
+      --mauve: #98685f;
+      --panel: #edebe7;
+      --display: 'Canela Web', 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Harmonia Sans', 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      display: grid;
+      place-items: center;
+      padding: 48px 16px;
+    }
+    main { width: 100%; max-width: 720px; }
+    h1 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(40px, 8vw, 64px);
+      line-height: 1;
+      margin: 0 0 12px;
+    }
+    p { color: var(--ink-soft); margin: 0 0 40px; line-height: 1.5; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    a.card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--panel);
+      overflow: hidden;
+      transition: transform .2s ease;
+    }
+    a.card:hover { transform: translateY(-3px); }
+    a.card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    a.card span {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 18px;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    a.card span::after { content: '→'; color: var(--mauve); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Summer v2 Homepage</h1>
+    <p>Static design mockups built from the Figma export.</p>
+    <div class="cards">
+      <a class="card" href="summer-v2-homepage.html">
+        <img src="summer-v2-assets/hero-friends.jpg" alt="">
+        <span>Desktop</span>
+      </a>
+      <a class="card" href="summer-v2-homepage-mobile.html">
+        <img src="summer-v2-assets/m-hero-friends.jpg" alt="">
+        <span>Mobile</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>
