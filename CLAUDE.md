@@ -28,14 +28,15 @@ To verify a change, use the `browser-automation` skill (`node ~/.claude/skills/b
 - Design tokens live in the `:root` block of each file. The accent colors are `--mauve`, `--mauve-dark`, `--mauve-soft`, `--teal` and `--teal-script`. Heart SVG `fill` and `stroke` use `var(--mauve…)` / `var(--teal)`, so they follow the accents. `--rust` is declared but unused.
 - Fonts: type follows the Figma file "Frank & Eileen 2026" (`LqvLmsxbbYe0EyHVGyjxy3`, desktop node `2:185`, mobile node `2:266`). The fonts are Canela Light (`--display`), Geist (`--sans`), Shirley (`--hand`) and Beth Ellen (`--script`). Canela and Shirley are licensed and used when installed locally. Otherwise the Google Fonts stand-ins listed after them in each font stack load.
 - The logo is `summer-v2-assets/logo.svg`, which combines the Figma wordmark and "EST 1947" vectors into one file.
-- `index.html` is the Pages landing page. It links to both mockups.
+- `summer-v2-pdp.html` is the desktop product page (Eileen), from Figma node `8:404`. It copies the homepage's header, footer, product-card CSS and accent switcher, and its photos are `summer-v2-assets/pdp-*`. The rating hearts are Figma's vectors, inlined as `<symbol>`s so they follow `--teal`.
+- `index.html` is the Pages landing page. It links to all three mockups.
 
-### Accent color switcher (duplicated in both files)
+### Accent color switcher (duplicated in every page)
 
-The switcher is a review tool, not part of the design. It runs from the comment `<!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->` to `</body>`, and that block is **identical in both HTML files**. Don't edit only one copy. Edit the block once and re-inject it into both files. The docs file has a Python snippet for this (§3).
+The switcher is a review tool, not part of the design. It runs from the comment `<!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->` to `</body>`, and that block is **identical in all three HTML files**. Don't edit only one copy. Edit the block once and re-inject it into every file. The docs file has a Python snippet for this (§3).
 
 - It sets inline styles for the accent variables on `:root`.
-- On load it takes state from the URL params first (`?primary=74825e&pop=81a7af`), then localStorage (`fe-mockup-accents`, `fe-mockup-accents-open`), then the file defaults. Both pages use the same storage keys.
+- On load it takes state from the URL params first (`?primary=74825e&pop=81a7af`), then localStorage (`fe-mockup-accents`, `fe-mockup-accents-open`), then the file defaults. All pages use the same storage keys.
 
 ## Gotchas
 
