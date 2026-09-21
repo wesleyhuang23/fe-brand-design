@@ -26,7 +26,8 @@ To verify a change, use the `browser-automation` skill (`node ~/.claude/skills/b
 - `summer-v2-homepage.html` is the desktop page, built from the 1440px artboard with breakpoints at 1280, 1080 and 767px. `summer-v2-homepage-mobile.html` is a separate mobile page. On screens wider than 520px it sits in a centered frame up to 430px wide. The mobile header has no wishlist heart.
 - Both pages have the same sections in the same order: `.announce`, header, `.hero`, `.discover`, `.feature`, `.arrivals`, `.letter`, `.picks`, footer.
 - Design tokens live in the `:root` block of each file. The accent colors are `--mauve`, `--mauve-dark`, `--mauve-soft`, `--teal` and `--teal-script`. Heart SVG `fill` and `stroke` use `var(--mauve…)` / `var(--teal)`, so they follow the accents. `--rust` is declared but unused.
-- Fonts: the brand fonts (Canela, Harmonia Sans) are used when installed locally. Otherwise the Google Fonts stand-ins listed after them in each font stack load.
+- Fonts: type follows the Figma file "Frank & Eileen 2026" (`LqvLmsxbbYe0EyHVGyjxy3`, desktop node `2:185`, mobile node `2:266`). The fonts are Canela Light (`--display`), Geist (`--sans`), Shirley (`--hand`) and Beth Ellen (`--script`). Canela and Shirley are licensed and used when installed locally. Otherwise the Google Fonts stand-ins listed after them in each font stack load.
+- The logo is `summer-v2-assets/logo.svg`, which combines the Figma wordmark and "EST 1947" vectors into one file.
 - `index.html` is the Pages landing page. It links to both mockups.
 
 ### Accent color switcher (duplicated in both files)
