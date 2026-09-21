@@ -9,12 +9,13 @@
     Companion to summer-v2-homepage.html (desktop); shares ./summer-v2-assets/. The m-* images
     are the mobile-specific crops; everything else reuses the desktop crops.
 
-    Fonts: brand fonts (Canela Web, Harmonia Sans) are used when installed locally;
-    otherwise the Google Font stand-ins after them in each stack load.
+    Fonts follow the Figma file (Phase 4 — F&E Brand 3.0, node 416:6300): Canela Deck Light,
+    Graphik, Shirley, Beth Ellen, Geist, Source Serif 4. The licensed ones (Canela, Graphik,
+    Shirley) are used when installed locally; otherwise the Google Font stand-ins after them load.
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Covered+By+Your+Grace&family=Figtree:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Cormorant+Garamond:wght@300;400;500&family=Covered+By+Your+Grace&family=Figtree:wght@400;500;600&family=Geist:wght@300;400;600;700&family=Source+Serif+4:ital,wght@1,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #fbfbf8;
@@ -27,11 +28,12 @@
       --panel: #edebe7;
       --black: #222420;
 
-      --display: 'Canela Web', 'Cormorant Garamond', Georgia, serif;
-      --text-serif: 'Canela Text Web', 'Newsreader', Georgia, serif;
-      --sans: 'Harmonia Sans', 'Figtree', 'Helvetica Neue', Arial, sans-serif;
-      --script: 'Nothing You Could Do', 'Bradley Hand', cursive;
-      --hand: 'Covered By Your Grace', 'Marker Felt', cursive;
+      --display: 'Canela Deck', 'Canela Deck Trial', 'Canela', 'Canela Web', 'Cormorant Garamond', Georgia, serif;
+      --text-serif: 'Source Serif 4', Georgia, serif;
+      --sans: 'Graphik', 'Graphik Trial', 'Harmonia Sans', 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+      --utility: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      --script: 'Beth Ellen', 'Bradley Hand', cursive;
+      --hand: 'Shirley', 'Covered By Your Grace', 'Marker Felt', cursive;
 
       --gutter: 22px;
     }
@@ -162,7 +164,7 @@
     .letter__hearts { left: 304px; top: 66px; width: 62px; }
     .letter__copy { left: 27px; right: 27px; top: 266px; }
     .letter__greeting { font-family: var(--script); font-size: 36px; font-weight: 400; -webkit-text-stroke: .5px currentColor; line-height: 1; color: var(--mauve); }
-    .letter__body { font-family: var(--text-serif); font-size: 15px; line-height: 19px; max-width: 300px; margin: 16px 0 26px 2px; }
+    .letter__body { font-family: var(--display); font-weight: 300; font-size: 15px; line-height: 19px; max-width: 300px; margin: 16px 0 26px 2px; }
     .letter__sign { font-family: var(--text-serif); font-style: italic; font-size: 15px; margin: 0 0 26px 4px; }
     .letter .btn--teal { min-width: 184px; }
 
