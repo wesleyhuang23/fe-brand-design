@@ -33,11 +33,12 @@ To verify a change, use the `browser-automation` skill (`node ~/.claude/skills/b
   - `fonts/` must ship with the pages. The published artifacts need these files uploaded as well, or they fall back.
 - The logo is `summer-v2-assets/logo.svg`, which combines the Figma wordmark and "EST 1947" vectors into one file.
 - `summer-v2-pdp.html` is the desktop product page (Eileen), from Figma node `8:404`. It copies the homepage's header, footer, product-card CSS and accent switcher, and its photos are `summer-v2-assets/pdp-*`. The rating hearts are Figma's vectors, inlined as `<symbol>`s so they follow `--teal`.
-- `index.html` is the Pages landing page. It links to all three mockups.
+- `summer-v2-pdp-mobile.html` is the mobile product page, from Figma node `8:234`. It copies the mobile homepage's shell (announce, header, `.rail`/`.dots`, footer accordion, switcher) and reuses the desktop PDP's photos, swatches and heart symbols. The button-up strip is its own 4-shirt crop, `pdp-button-up-guide-m.png`.
+- `index.html` is the Pages landing page. It links to all four mockups.
 
 ### Accent color switcher (duplicated in every page)
 
-The switcher is a review tool, not part of the design. It runs from the comment `<!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->` to `</body>`, and that block is **identical in all three HTML files**. Don't edit only one copy. Edit the block once and re-inject it into every file. The docs file has a Python snippet for this (§3).
+The switcher is a review tool, not part of the design. It runs from the comment `<!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->` to `</body>`, and that block is **identical in all four mockup files**. Don't edit only one copy. Edit the block once and re-inject it into every file. The docs file has a Python snippet for this (§3).
 
 - It sets inline styles for the accent variables on `:root`.
 - On load it takes state from the URL params first (`?primary=74825e&pop=81a7af`), then localStorage (`fe-mockup-accents`, `fe-mockup-accents-open`), then the file defaults. All pages use the same storage keys.
