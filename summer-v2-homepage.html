@@ -9,14 +9,45 @@
     Not part of the theme build. Photos in ./summer-v2-assets/ were extracted from the SVG
     and pre-cropped to the frames Figma used, at 2×.
 
-    Type follows the Figma file "Frank & Eileen 2026" (LqvLmsxbbYe0EyHVGyjxy3): Canela Light,
-    Geist, Shirley, Beth Ellen. Canela and Shirley are licensed and used when installed locally;
-    otherwise the Google Font stand-ins after them load.
+    Type follows the Figma file "Frank & Eileen 2026" (LqvLmsxbbYe0EyHVGyjxy3): Canela Web
+    Light (weight 300, as in the theme), Geist, Shirley and Beth Ellen. Canela Web and Shirley
+    are licensed fonts, self-hosted from ./fonts/; Geist and Beth Ellen come from Google Fonts.
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Cormorant+Garamond:wght@300;400;500&family=Covered+By+Your+Grace&family=Geist:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Geist:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Canela Web — the brand serif, self-hosted from ./fonts/. Light (300) is the only
+       weight the design uses; it matches the theme's own Canela Web face. Only the .woff
+       of Light Web was supplied, so there is no .woff2 for the upright Light. */
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-Light-Web.woff') format('woff');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-LightItalic-Web.woff2') format('woff2'),
+           url('fonts/Canela-LightItalic-Web.woff') format('woff');
+      font-weight: 300;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    /* Shirley — the real brand font, self-hosted from ./fonts/ (the file is named
+       Bold, but its family is "Shirley Regular", which is the weight Figma uses). */
+    @font-face {
+      font-family: 'Shirley';
+      src: url('fonts/Shirley-Bold.woff2') format('woff2'),
+           url('fonts/Shirley-Bold.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #fbfbf8;
       --ink: #231f1c;
@@ -30,10 +61,10 @@
       --panel: #edebe7;
       --black: #222420;
 
-      --display: 'Canela', 'Canela Web', 'Cormorant Garamond', Georgia, serif;
+      --display: 'Canela Web', 'Canela', 'Cormorant Garamond', Georgia, serif;
       --sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
       --script: 'Beth Ellen', 'Bradley Hand', cursive;
-      --hand: 'Shirley', 'Covered By Your Grace', 'Marker Felt', cursive;
+      --hand: 'Shirley', 'Marker Felt', cursive;
 
       --wide: 1440px;
       --gutter: 60px;
@@ -91,7 +122,7 @@
       height: 40px; font-family: var(--sans); font-size: 11px; letter-spacing: .1em;
     }
     .announce__left { letter-spacing: .06em; }
-    .announce__left em { font-family: var(--display); font-style: normal; font-size: 15px; margin-left: 3px; }
+    .announce__left em { font-family: var(--display); font-weight: 300; font-style: normal; font-size: 15px; margin-left: 3px; }
     .announce__center { font-weight: 600; text-transform: uppercase; }
     .announce__center .sep { margin: 0 10px; }
     .announce__center a { font-weight: 600; }

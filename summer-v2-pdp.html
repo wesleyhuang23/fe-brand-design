@@ -8,14 +8,45 @@
     Product detail page (Eileen) from the Figma file "Frank & Eileen 2026", node 8:404.
     Shares the homepage header, footer and ./summer-v2-assets/. PDP photos are pdp-*.
 
-    Type follows the Figma file "Frank & Eileen 2026" (LqvLmsxbbYe0EyHVGyjxy3): Canela Light,
-    Geist, Shirley, Beth Ellen. Canela and Shirley are licensed and used when installed locally;
-    otherwise the Google Font stand-ins after them load.
+    Type follows the Figma file "Frank & Eileen 2026" (LqvLmsxbbYe0EyHVGyjxy3): Canela Web
+    Light (weight 300, as in the theme), Geist, Shirley and Beth Ellen. Canela Web and Shirley
+    are licensed fonts, self-hosted from ./fonts/; Geist and Beth Ellen come from Google Fonts.
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Cormorant+Garamond:wght@300;400;500&family=Covered+By+Your+Grace&family=Geist:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Geist:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Canela Web — the brand serif, self-hosted from ./fonts/. Light (300) is the only
+       weight the design uses; it matches the theme's own Canela Web face. Only the .woff
+       of Light Web was supplied, so there is no .woff2 for the upright Light. */
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-Light-Web.woff') format('woff');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-LightItalic-Web.woff2') format('woff2'),
+           url('fonts/Canela-LightItalic-Web.woff') format('woff');
+      font-weight: 300;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    /* Shirley — the real brand font, self-hosted from ./fonts/ (the file is named
+       Bold, but its family is "Shirley Regular", which is the weight Figma uses). */
+    @font-face {
+      font-family: 'Shirley';
+      src: url('fonts/Shirley-Bold.woff2') format('woff2'),
+           url('fonts/Shirley-Bold.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #fbfbf8;
       --ink: #231f1c;
@@ -32,10 +63,10 @@
       --line: #bdbbb2;
       --denim: #496179;
 
-      --display: 'Canela', 'Canela Web', 'Cormorant Garamond', Georgia, serif;
+      --display: 'Canela Web', 'Canela', 'Cormorant Garamond', Georgia, serif;
       --sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
       --script: 'Beth Ellen', 'Bradley Hand', cursive;
-      --hand: 'Shirley', 'Covered By Your Grace', 'Marker Felt', cursive;
+      --hand: 'Shirley', 'Marker Felt', cursive;
 
       --wide: 1440px;
       --gutter: 60px;
@@ -93,7 +124,7 @@
       height: 40px; font-family: var(--sans); font-size: 11px; letter-spacing: .1em;
     }
     .announce__left { letter-spacing: .06em; }
-    .announce__left em { font-family: var(--display); font-style: normal; font-size: 15px; margin-left: 3px; }
+    .announce__left em { font-family: var(--display); font-weight: 300; font-style: normal; font-size: 15px; margin-left: 3px; }
     .announce__center { font-weight: 600; text-transform: uppercase; }
     .announce__center .sep { margin: 0 10px; }
     .announce__center a { font-weight: 600; }
@@ -255,7 +286,7 @@
     .reviews__title { font-family: var(--display); font-weight: 300; font-size: 30px; line-height: 1.3; letter-spacing: .02em; text-align: center; }
     .reviews .wrap { padding: 0 120px; }
     .summary { display: grid; grid-template-columns: 300px 340px 1fr auto; align-items: start; margin-top: 61px; padding-bottom: 16px; }
-    .summary__score { font-family: var(--display); font-weight: 200; font-size: 64px; line-height: 77px; }
+    .summary__score { font-family: var(--display); font-weight: 300; font-size: 64px; line-height: 77px; }
     .summary__score + .hearts { margin-top: 9px; }
     .summary__count { margin-top: 8px; font-size: 13px; color: var(--muted); }
     .histogram { display: grid; gap: 15px; }
@@ -303,7 +334,7 @@
     .verified { margin-top: 5px; font-size: 9px; font-weight: 600; letter-spacing: .1em; color: var(--denim); }
     .review__stats { margin-top: 18px; font-size: 11px; color: var(--muted); white-space: pre; line-height: 14px; }
     .review__head { display: flex; align-items: center; gap: 18px; margin-left: 3px; }
-    .review__title { font-family: var(--display); font-weight: 200; font-size: 18px; line-height: 22px; }
+    .review__title { font-family: var(--display); font-weight: 300; font-size: 18px; line-height: 22px; }
     .review__body { margin-top: 12px; font-size: 14px; line-height: 18px; }
     .review__product { margin-top: 60px; font-size: 9px; font-weight: 600; letter-spacing: .08em; color: var(--denim); white-space: pre; }
     .review__helpful { margin-top: 26px; font-size: 10px; font-weight: 600; letter-spacing: .06em; color: var(--muted); white-space: pre; }
