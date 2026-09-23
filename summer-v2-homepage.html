@@ -17,12 +17,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Geist:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Canela Web — the brand serif, self-hosted from ./fonts/. Light (300) is the only
-       weight the design uses; it matches the theme's own Canela Web face. Only the .woff
-       of Light Web was supplied, so there is no .woff2 for the upright Light. */
+    /* Canela Web Light (300) — the brand serif, self-hosted from ./fonts/. Light is the only
+       weight the design uses, and the only one declared here: asking for any heavier weight
+       would make the browser fake a bold instead of using Canela's own cut.
+       Note: fonts/Canela-Light-Web.woff holds WOFF2 data despite its .woff name, so the
+       format hint below says woff2 — Safari and Firefox reject it when it says woff. */
     @font-face {
       font-family: 'Canela Web';
-      src: url('fonts/Canela-Light-Web.woff') format('woff');
+      src: url('fonts/Canela-Light-Web.woff') format('woff2');
       font-weight: 300;
       font-style: normal;
       font-display: swap;
@@ -30,8 +32,7 @@
 
     @font-face {
       font-family: 'Canela Web';
-      src: url('fonts/Canela-LightItalic-Web.woff2') format('woff2'),
-           url('fonts/Canela-LightItalic-Web.woff') format('woff');
+      src: url('fonts/Canela-LightItalic-Web.woff2') format('woff2');
       font-weight: 300;
       font-style: italic;
       font-display: swap;
