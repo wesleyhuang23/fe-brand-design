@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDP 2.0 — Eileen (Desktop)</title>
+  <!--
+    2.0 design of the desktop product page (Eileen), from the Figma file
+    "Frank & Eileen 3.0 2026" (LqvLmsxbbYe0EyHVGyjxy3), node 65:12336. Photos and swatches
+    live in ./summer-v2-assets/pdp20/. This page has its own footer, wider than the v2 one.
+    Not part of the theme build. Photos in ./summer-v2-assets/ were extracted from the SVG
+    and pre-cropped to the frames Figma used, at 2×.
+
+    Type follows the Figma file "Frank & Eileen 2026" (LqvLmsxbbYe0EyHVGyjxy3): Canela Web
+    Light (weight 300, as in the theme), Geist, Shirley and Beth Ellen. Canela Web and Shirley
+    are licensed fonts, self-hosted from ./fonts/; Geist and Beth Ellen come from Google Fonts.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Geist:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Canela Web Light (300) — the brand serif, self-hosted from ./fonts/. Light is the only
+       weight the design uses, and the only one declared here: asking for any heavier weight
+       would make the browser fake a bold instead of using Canela's own cut.
+       Note: fonts/Canela-Light-Web.woff holds WOFF2 data despite its .woff name, so the
+       format hint below says woff2 — Safari and Firefox reject it when it says woff. */
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-Light-Web.woff') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-LightItalic-Web.woff2') format('woff2');
+      font-weight: 300;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    /* Shirley — the real brand font, self-hosted from ./fonts/ (the file is named
+       Bold, but its family is "Shirley Regular", which is the weight Figma uses). */
+    @font-face {
+      font-family: 'Shirley';
+      src: url('fonts/Shirley-Bold.woff2') format('woff2'),
+           url('fonts/Shirley-Bold.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #fbfbf8;
+      --ink: #231f1c;
+      --ink-soft: #77716c;
+      --mauve: #98685f;
+      --mauve-dark: #85574f;
+      --mauve-soft: #b07a70;
+      --teal: #537a82;
+      --teal-script: #4f7e8a;
+      --rust: #a0452f;
+      --panel: #edebe7;
+      --black: #222420;
+      --muted: #6f716a;
+      --line: #bdbbb2;
+      --denim: #496179;
+      --grey: #424242;
+      --chip-line: #b4b8af;
+
+      --display: 'Canela Web', 'Canela', 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      --script: 'Beth Ellen', 'Bradley Hand', cursive;
+      --hand: 'Shirley', 'Marker Felt', cursive;
+
+      --wide: 1440px;
+      --gutter: 60px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; margin: 0; padding: 0; }
+    h1, h2, h3, h4, p { margin: 0; }
+    img { display: block; max-width: 100%; }
+
+    .wrap { max-width: var(--wide); margin: 0 auto; padding: 0 var(--gutter); }
+    .wrap--90 { padding: 0 90px; }
+    .wrap--90.wrap--bar { padding: 0 55px 0 90px; }
+
+    .cover { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ---------- Type ---------- */
+    .section-title {
+      font-family: var(--display); font-weight: 300;
+      font-size: 30px; line-height: 1.2; letter-spacing: .02em; text-align: center;
+    }
+    .discover .section-title { font-size: 31px; }
+    .section-sub { font-size: 14px; text-align: center; margin-top: 10px; }
+    .caps { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 36px; min-width: 150px; padding: 0 24px;
+      background: var(--black); color: var(--bg);
+      font-family: var(--sans); font-size: 12px; font-weight: 600; line-height: 16px;
+      letter-spacing: .12em; text-transform: uppercase;
+      transition: background .2s ease;
+    }
+    .btn:hover { background: #000; }
+    .btn--light { height: 32px; min-width: 132px; padding: 0 20px; background: var(--bg); color: var(--black); font-size: 11px; line-height: 15px; }
+    .btn--light:hover { background: #fff; }
+    .btn--accent { background: var(--mauve); }
+    .btn--accent:hover { background: var(--mauve-dark); }
+
+    /* ---------- Announcement ---------- */
+    .announce { background: var(--mauve); color: #fff; }
+    .announce__inner {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      height: 40px; font-family: var(--sans); font-size: 11px; letter-spacing: .1em;
+    }
+    .announce__left { letter-spacing: .06em; }
+    .announce__left em { font-family: var(--display); font-weight: 300; font-style: normal; font-size: 15px; margin-left: 3px; }
+    .announce__center { font-weight: 600; text-transform: uppercase; }
+    .announce__center .sep { margin: 0 10px; }
+    .announce__center a { font-weight: 600; }
+    .announce__right { justify-self: end; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    .announce__right .locale { letter-spacing: .06em; display: inline-flex; align-items: center; gap: 5px; }
+    .announce__right a { font-weight: 600; text-transform: uppercase; }
+
+    /* ---------- Header ---------- */
+    .header__bar { border-bottom: 1px solid var(--panel); }
+    .header__top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 83px; }
+    .logo { display: block; width: 236px; }
+    .logo img { width: 100%; height: auto; }
+    .header__tools { justify-self: end; display: flex; align-items: center; gap: 46px; }
+    .search {
+      display: flex; align-items: center; gap: 10px;
+      width: 140px; padding-bottom: 4px;
+      border-bottom: 1px solid var(--teal);
+      font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .header__icons { display: flex; gap: 14px; }
+    .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+    .icon--bag { width: 19px; height: 22px; fill: currentColor; stroke: none; }
+    .icon--sm { width: 18px; height: 18px; stroke-width: 1.6; }
+    .icon--heart { width: 21px; height: 22px; stroke-width: .9; }
+    .nav { display: flex; justify-content: center; gap: 21px; height: 46px; align-items: center; }
+    .nav a { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+    .nav a.is-sale { color: var(--mauve); }
+
+    /* ---------- PDP 2.0: breadcrumbs, gallery, buy box ---------- */
+    .wrap50 { max-width: 1440px; margin: 0 auto; padding: 0 50px; }
+    .crumbs { display: flex; gap: 7px; padding: 12px 0 13px; font-size: 12.8px; font-weight: 500; line-height: 14px; color: var(--grey); text-transform: capitalize; white-space: nowrap; }
+    .crumbs a:hover { text-decoration: underline; }
+
+    .pdp { display: grid; grid-template-columns: minmax(0, 837.5fr) 502.5fr; }
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-self: start; }
+    .gallery__img { aspect-ratio: 413.75 / 538.22; overflow: hidden; background: var(--panel); }
+
+    .buy { padding: 0 26.25px; }
+    .buy__inner { padding-left: 20px; max-width: 430px; }
+    .buy__kicker { font-family: var(--hand); font-size: 20px; line-height: 22px; color: var(--teal); text-transform: uppercase; }
+    .buy__title { font-family: var(--display); font-weight: 300; font-size: 42px; line-height: 47px; padding: 3px 0 8px; }
+    .buy__sub { padding: 5px 0; font-size: 16px; line-height: 20px; text-transform: capitalize; }
+    .buy__rating { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+    .buy__reviews { font-size: 12px; color: var(--denim); text-decoration: underline; }
+    .buy__price { margin-top: 12px; font-size: 15px; font-weight: 600; line-height: 25.6px; color: var(--grey); }
+    .buy__color { display: flex; gap: 4px; margin-top: 16px; font-size: 12px; font-weight: 600; line-height: 17.5px; }
+
+    /* swatches: a 43px cell holds a 35px disc, so the rows line up on a 43px pitch */
+    .swatch-group { margin-top: 12px; }
+    .swatch-group:first-of-type { margin-top: 16px; }
+    .swatch-group__name { font-size: 12px; line-height: 22px; text-transform: capitalize; }
+    .swatches { display: flex; flex-wrap: wrap; width: 438px; max-width: 100%; margin-top: 4px; }
+    .swatch {
+      position: relative; width: 43px; height: 43px; padding: 0; cursor: pointer;
+      background: none; border: 1px solid transparent; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .swatch i {
+      display: block; width: 35px; height: 35px; border-radius: 50%;
+      border: 1px solid #bbb; background: var(--sw) center / cover;
+    }
+    .swatch.is-selected { border-color: #6f815b; box-shadow: inset 0 0 0 5px #fff; }
+    .swatch__sale {
+      position: absolute; left: 0; bottom: .79px; padding: 2px; border-radius: 2px;
+      background: #f7f6ef; filter: drop-shadow(0 1.5px 0 #b9b8b3);
+      font-size: 8px; font-weight: 600; line-height: 12.8px; letter-spacing: .04em;
+      text-transform: uppercase; color: var(--mauve);
+    }
+
+    .buy__sizes { margin-top: 26px; }
+    .buy__sizes h2 { font-size: 14px; font-weight: 600; line-height: 22px; text-transform: uppercase; }
+    .sizes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+    .size {
+      width: 40px; height: 40px; cursor: pointer; border-radius: 100px;
+      background: #fcfbf8; border: 1px solid var(--chip-line);
+      font-family: var(--sans); font-size: 15px; line-height: 24px; letter-spacing: 1px; color: #000;
+    }
+    .size:hover { border-color: var(--ink); }
+    .buy__links { display: flex; align-items: center; gap: 13px; margin-top: 28px; font-size: 12px; line-height: 19.2px; }
+    .buy__links a { text-decoration: underline; text-decoration-thickness: .5px; }
+    .buy__links span { width: 1px; height: 15px; background: var(--chip-line); }
+    .btn--block { display: flex; width: 413px; max-width: 100%; height: 44px; margin-top: 24px; }
+    .buy__wish { margin-top: 24px; font-size: 13px; color: var(--muted); }
+    .buy__wish a { color: var(--ink); text-decoration: underline; margin-left: 6px; }
+
+    .highlights { margin-top: 23px; }
+    .highlights h2 { font-family: var(--display); font-weight: 300; font-size: 20px; line-height: 26px; }
+    .highlights ul { margin-top: 9px; font-size: 13px; line-height: 16px; }
+    .highlights li { padding-left: 16px; text-indent: -16px; }
+    .highlights li::before { content: '•'; display: inline-block; width: 16px; text-indent: 0; }
+
+    .pdp-accordion { width: 413px; max-width: 100%; margin-top: 24px; border-top: 1px solid var(--line); }
+    .pdp-accordion details { border-bottom: 1px solid var(--line); }
+    .pdp-accordion summary {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 48px; cursor: pointer; list-style: none;
+      font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .pdp-accordion summary::-webkit-details-marker { display: none; }
+    .pdp-accordion summary::after { content: '+'; font-size: 17px; font-weight: 400; }
+    .pdp-accordion details[open] summary::after { content: '–'; }
+    .pdp-accordion details p { padding: 0 0 16px; font-size: 13px; line-height: 18px; color: var(--muted); }
+
+    /* ---------- Hearts (Figma's hand-drawn rating marks; they follow the pop accent) ---------- */
+    .hearts { display: inline-flex; gap: 5px; color: var(--teal); }
+    .hearts svg { width: 14.5px; height: 16.5px; fill: currentColor; display: block; }
+    .hearts--sm svg { width: 9.7px; height: 12px; }
+    .hearts--hist svg { width: 13.9px; height: 16.3px; }
+    .heart-part { position: relative; display: block; }
+    .heart-part svg + svg { position: absolute; inset: 0; }
+    .heart-part .heart-part__bg { color: var(--panel); }
+    .heart-part .heart-part__fill { clip-path: inset(0 calc(100% - var(--fill)) 0 0); }
+    .link-denim { font-size: 12px; color: var(--denim); text-decoration: underline; }
+
+    /* ---------- Editorial band ---------- */
+    .edit-band { margin-top: 40px; }
+    .edit-band img { width: 100%; aspect-ratio: 1440 / 299.81; object-fit: cover; }
+
+    /* ---------- You Might Also Love ---------- */
+    .recs { padding: 60px 0 0; }
+    .recs__head { position: relative; display: flex; align-items: center; justify-content: center; }
+    .recs__title { font-family: var(--display); font-weight: 300; font-size: 32px; line-height: 1.2; letter-spacing: .02em; text-transform: capitalize; }
+    .recs__nav { position: absolute; top: 50%; width: 36px; height: 36px; margin-top: -18px; padding: 0; cursor: pointer; border: 0; border-radius: 50%; background: rgba(66, 66, 66, .05); display: flex; align-items: center; justify-content: center; }
+    .recs__nav svg { width: 7px; height: 13px; fill: var(--grey); }
+    .recs__nav--prev { left: 0; opacity: .3; }
+    .recs__nav--next { right: 0; }
+    .recs__nav--next svg { transform: rotate(180deg); }
+    .recs__track { display: grid; grid-auto-flow: column; grid-auto-columns: 248.8px; gap: 24px; margin-top: 30px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .recs__track::-webkit-scrollbar { display: none; }
+    .recs__track > * { scroll-snap-align: start; }
+    .rec__img { aspect-ratio: 248.8 / 323.42; overflow: hidden; background: var(--panel); }
+    .rec__name { margin-top: 16px; font-size: 16px; font-weight: 600; line-height: 20px; }
+    .rec__fabric, .rec__price { margin-top: 3px; font-size: 12px; text-transform: capitalize; }
+    .rec__colors { margin-top: 7px; font-size: 12px; line-height: 18.4px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+    /* ---------- Reviews ---------- */
+    .reviews { padding-top: 96px; }
+    .reviews__title { font-family: var(--display); font-weight: 300; font-size: 30px; line-height: 1.3; letter-spacing: .02em; text-align: center; }
+    .reviews__body { padding: 0 70px; }
+    .summary { display: grid; grid-template-columns: 300px 340px 1fr auto; align-items: start; margin-top: 60px; padding-bottom: 20px; }
+    .summary__score { font-family: var(--display); font-weight: 300; font-size: 64px; line-height: 77px; }
+    .summary__score + .hearts { margin-top: 9px; }
+    .summary__count { margin-top: 8px; font-size: 13px; color: var(--muted); }
+    .histogram { display: grid; gap: 15px; }
+    .histogram__row { display: grid; grid-template-columns: 25px 25px 220px 1fr; align-items: center; height: 19px; }
+    .histogram__row > span:first-child { font-family: var(--display); font-weight: 300; font-size: 15px; }
+    .track { position: relative; height: 4px; border-radius: 2px; background: var(--line); }
+    .track i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--pct); border-radius: 2px; background: var(--teal); }
+    .histogram .link-denim { font-size: 13px; padding-left: 20px; }
+    .fit { width: 220px; margin-top: 20px; }
+    .fit__label { font-size: 11px; font-weight: 600; letter-spacing: .14em; }
+    .fit__track { position: relative; height: 3px; margin-top: 14px; border-radius: 2px; background: var(--line); }
+    .fit__track i { position: absolute; top: 50%; left: var(--at); width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--mauve); }
+    .fit__value { margin-top: 15px; font-size: 12px; color: var(--muted); text-align: center; }
+    .summary .btn { margin-top: 16px; }
+    .reviews__rule { height: 1px; background: var(--line); }
+    .kicker-caps { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    .media { padding-top: 40px; }
+    .media__row { display: flex; gap: 16px; margin-top: 16px; }
+    .media__row img { width: 148px; height: 190px; object-fit: cover; }
+    .filters { display: flex; gap: 20px; margin-top: 40px; }
+    .pill {
+      display: inline-flex; align-items: center; height: 40px; padding: 0 24px; border-radius: 20px;
+      border: 1px solid var(--line); background: none; cursor: pointer;
+      font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .1em; color: var(--ink); text-transform: uppercase;
+    }
+    .pill--search { width: 220px; color: var(--muted); }
+    .pill--rating { width: 140px; }
+    .pill--media { width: 150px; }
+    .pill--fit { width: 120px; }
+    .topics { margin-top: 32px; }
+    .topics__label { font-size: 10px; font-weight: 600; letter-spacing: .14em; color: var(--muted); }
+    .topics__row { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding-bottom: 34px; border-bottom: 1px solid var(--line); }
+    .chip { height: 30px; padding: 0 20px; border-radius: 15px; border: 0; background: var(--panel); cursor: pointer;
+      font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: .12em; color: var(--ink); }
+    .topics__more { margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: .1em; }
+    .topics__sort { margin-left: auto; font-size: 10px; font-weight: 600; letter-spacing: .08em; color: var(--muted); white-space: pre; }
+    .review { display: grid; grid-template-columns: 200px 640px 190px; justify-content: space-between; padding: 40px 0; border-bottom: 1px solid var(--line); }
+    .review__name { font-size: 13px; font-weight: 600; }
+    .verified { margin-top: 5px; font-size: 9px; font-weight: 600; letter-spacing: .1em; color: var(--denim); }
+    .review__stats { margin-top: 18px; font-size: 11px; line-height: 14px; color: var(--muted); white-space: pre; }
+    .review__head { display: flex; align-items: center; gap: 18px; margin-left: 3px; }
+    .review__title { font-family: var(--display); font-weight: 300; font-size: 18px; line-height: 22px; }
+    .review__body { margin-top: 12px; font-size: 14px; line-height: 18px; }
+    .review__product { margin-top: 60px; font-size: 9px; font-weight: 600; letter-spacing: .08em; color: var(--denim); white-space: pre; }
+    .review__helpful { margin-top: 26px; font-size: 10px; font-weight: 600; letter-spacing: .06em; color: var(--muted); white-space: pre; }
+    .review__date { font-size: 12px; color: var(--muted); text-align: right; }
+    .review .fit { width: 190px; margin-top: 24px; }
+    .review .fit__label { font-size: 10px; }
+    .review .fit__track { margin-top: 9px; }
+    .review .fit__track i { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: var(--denim); }
+    .review .fit__value { margin-top: 11px; font-size: 10px; text-transform: uppercase; }
+    .pager { padding: 130px 0 134px; text-align: center; font-size: 13px; color: var(--muted); word-spacing: .6em; }
+
+    /* ---------- Footer 2.0 ---------- */
+    .f20 { background: var(--mauve); color: #fff; }
+    .f20__cols { display: grid; grid-template-columns: 1.55fr 1fr 1fr 1.05fr 1.2fr; gap: 24px; padding: 100px 0; }
+    .f20__join h2 { font-family: var(--display); font-weight: 300; font-size: 31.6px; line-height: 40.15px; letter-spacing: .03em; text-transform: capitalize; }
+    .f20__join p { margin-top: 13.5px; font-size: 14.5px; line-height: 23.25px; }
+    .f20__social { display: flex; gap: 18px; margin-top: 29px; }
+    .f20__social img { width: 36.29px; height: 36.29px; }
+    .f20 h3 { padding-bottom: 10px; font-size: 14px; font-weight: 600; letter-spacing: .2em; line-height: 22.4px; text-transform: uppercase; }
+    .f20 li { font-size: 14.5px; line-height: 23.25px; margin-top: 10px; }
+    .f20 a:hover { text-decoration: underline; }
+    .f20__tagline { position: relative; background: var(--black); padding: 54px 0 0; height: 181px; }
+    .f20__tagline h2 { font-family: var(--display); font-weight: 300; font-size: 34px; line-height: 1.2; letter-spacing: .02em; text-transform: capitalize; color: var(--bg); }
+    .f20__seals { position: absolute; right: 0; top: 61px; display: flex; gap: 17.67px; }
+    .f20__seals img { width: 71px; height: 69px; }
+    .f20__legal { background: var(--black); color: #dfdfdf; }
+    .f20__legal ul { display: flex; flex-wrap: wrap; gap: 0 14px; padding: 15px 0; font-size: 12.8px; font-weight: 600; line-height: 20.4px; letter-spacing: .08em; text-transform: uppercase; }
+    .f20__legal .dim { color: rgba(223, 223, 223, .9); }
+
+    /* ---------- Responsive (Figma is desktop only; best-guess reflows) ---------- */
+    @media (max-width: 1280px) {
+      .wrap--90 { padding: 0 50px; }
+      .pdp { grid-template-columns: minmax(0, 1fr) 470px; }
+      .reviews__body { padding: 0 20px; }
+      .f20__cols { grid-template-columns: 1.4fr repeat(4, 1fr); gap: 20px; }
+    }
+    @media (max-width: 1180px) {
+      .summary { grid-template-columns: 220px 340px 1fr; row-gap: 32px; }
+      .summary .btn { grid-column: 1 / -1; justify-self: start; }
+      .review { grid-template-columns: 180px minmax(0, 1fr) 170px; gap: 32px; }
+      .review .fit { width: 170px; }
+    }
+    @media (max-width: 1080px) {
+      :root { --gutter: 30px; }
+      .wrap--90, .wrap50 { padding: 0 30px; }
+      .nav { gap: 16px; }
+      .pdp { grid-template-columns: 1fr; row-gap: 40px; }
+      .buy { padding: 0; }
+      .buy__inner { padding-left: 0; }
+      .swatches { width: 100%; }
+      .summary { grid-template-columns: 1fr 1fr; }
+      .filters, .topics__row { flex-wrap: wrap; }
+      .topics__sort { margin-left: 0; width: 100%; }
+      .review { grid-template-columns: 1fr; gap: 20px; }
+      .f20__cols { grid-template-columns: repeat(2, 1fr); row-gap: 40px; padding: 60px 0; }
+      .f20__join { grid-column: 1 / -1; }
+      .f20__seals { position: static; margin-top: 24px; }
+      .f20__tagline { height: auto; padding: 40px 0; }
+    }
+    @media (max-width: 767px) {
+      :root { --gutter: 16px; }
+      .wrap--90, .wrap50 { padding: 0 16px; }
+      .announce__left, .announce__right { display: none; }
+      .announce__inner { grid-template-columns: 1fr; justify-items: center; }
+      .header__top { grid-template-columns: 1fr auto; height: 64px; }
+      .header__top > div:first-child { display: none; }
+      .logo { width: 160px; }
+      .search { display: none; }
+      .nav { gap: 14px; height: auto; margin: 0; padding: 12px 0 16px; justify-content: flex-start; overflow-x: auto; }
+      .nav a { white-space: nowrap; }
+      .gallery { gap: 8px; }
+      .btn--block, .pdp-accordion { width: 100%; }
+      .reviews { padding-top: 64px; }
+      .summary { grid-template-columns: 1fr; }
+      .media__row { overflow-x: auto; }
+      .media__row img { flex: 0 0 auto; }
+      .pill--search, .pill--rating, .pill--media, .pill--fit { width: auto; }
+      .f20__cols { grid-template-columns: 1fr 1fr; }
+      .f20__tagline h2 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement bar -->
+  <div class="announce">
+    <div class="wrap--90 wrap--bar announce__inner">
+      <div class="announce__left">Visit <em>ReLoved</em></div>
+      <div class="announce__center">The Fall Collection<span class="sep">|</span><a href="#">Shop Now</a></div>
+      <div class="announce__right">
+        <span class="locale">United States (USD$)
+          <svg class="icon icon--sm" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M4 8l8 8 8-8"/></svg>
+        </span>
+        <span>|</span>
+        <a href="#">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header__bar">
+    <div class="wrap--90 wrap--bar">
+      <div class="header__top">
+        <div></div>
+        <a class="logo" href="#"><img src="summer-v2-assets/logo.svg" alt="Frank &amp; Eileen, est. 1947" width="236" height="46"></a>
+        <div class="header__tools">
+          <label class="search">
+            <svg class="icon icon--sm" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5"/><path d="M15 15l6 6"/></svg>
+            Search
+          </label>
+          <div class="header__icons">
+            <svg class="icon icon--heart" viewBox="0 0 20 21" aria-label="Wishlist"><path d="M4.18838 0.566128C3.09978 0.333387 2.22911 0.458208 1.61824 0.852474C1.05528 1.21594 0.641184 1.85559 0.501494 2.84358L0.47697 3.04536C0.320413 4.65512 0.856152 6.29479 1.68579 7.89777C2.51665 9.50299 3.60603 11.0075 4.51927 12.3759C5.64447 14.0436 6.65669 15.6843 7.82564 17.274C8.17013 17.7406 8.51984 18.3596 8.8409 18.8508C9.18332 19.3747 9.52908 19.8186 9.93425 20.1065C10.3899 20.4266 10.8237 20.5339 11.2418 20.4999C11.6692 20.4652 12.1203 20.2791 12.5915 19.9428C13.5435 19.2632 14.4848 18.0389 15.3435 16.5859C17.0545 13.6903 18.3263 10.0801 18.6563 8.75907C18.9339 7.63624 19.1008 6.49938 18.8899 5.6096C18.7872 5.17635 18.5982 4.81717 18.2998 4.54202C18.0011 4.26676 17.5616 4.04568 16.9084 3.94314C15.9514 3.79491 14.961 4.02321 13.9332 4.53103C12.9085 5.03745 11.8723 5.80994 10.8346 6.71496C10.7745 6.77643 10.6862 6.8361 10.5579 6.85026C10.3504 6.87306 10.2155 6.75373 10.1848 6.72544C10.1063 6.65293 10.0599 6.56093 10.0429 6.52792C9.99373 6.43204 9.94442 6.30498 9.90488 6.19551C9.86335 6.08051 9.82467 5.96264 9.7965 5.87479C9.78232 5.83056 9.77003 5.7928 9.76186 5.76642C9.75882 5.75661 9.75644 5.74825 9.75442 5.74166C8.80584 3.0176 6.90397 1.14774 4.18838 0.566128Z"/></svg>
+            <svg class="icon icon--bag" viewBox="0 0 104.57 120.61" aria-label="Bag"><path d="m9.88 47.69c.94 14.34 1.8 28.67 2.91 43 .46 6 .18 12.89 1.9 18.71 1.63 5.54 6.75 6.7 11.84 7.54 15.8 2.61 32 4.83 48 3 5.83-.65 14.21-1 19.07-4.63 4.27-3.14 2.95-11.38 3.12-15.91.61-16.57 1.12-33.14 1.79-49.7.12-2.9-4.38-2.89-4.5 0-.63 15.48-1.11 31-1.68 46.44-.13 3.57.16 7.5-.41 11-1 6.13-6.45 6.45-11.58 7.41a109.85 109.85 0 0 1 -27.17 1.19 232.51 232.51 0 0 1 -27.31-3.5 18 18 0 0 1 -3.69-.86c-3.38-1.43-3.47-4.37-3.79-7.56-.36-3.58-.64-7.17-.92-10.75-1.2-15.13-2.11-30.28-3.1-45.42-.19-2.87-4.69-2.89-4.5 0z"/><path d="m2.17 46.13a660.73 660.73 0 0 1 100.25 3.25c2.88.31 2.86-4.19 0-4.5a660.73 660.73 0 0 0 -100.25-3.25c-2.89.13-2.9 4.63 0 4.5z"/><path d="m37.39 55.08a124.17 124.17 0 0 1 3.73-27.18c1.82-7.81 4.81-17.4 12.2-21.7 13.77-7.99 13.05 15.18 13.68 22.8.75 9.78 1.6 19.55 2.25 29.34.19 2.88 4.69 2.9 4.5 0-.87-13.12-2-26.21-3-39.32-.61-8.6-3.75-21.61-15.33-18.57-9.42 2.47-14.42 12.21-17.16 20.76a117.68 117.68 0 0 0 -5.37 33.87c0 2.9 4.47 2.9 4.5 0z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="wrap--90 wrap--bar">
+      <nav class="nav">
+        <a href="#">Shop All</a>
+        <a href="#">New</a>
+        <a href="#">Featured</a>
+        <a href="#">Tops</a>
+        <a href="#">Sweaters</a>
+        <a href="#">Bottoms</a>
+        <a href="#">Dresses</a>
+        <a href="#">Sets</a>
+        <a href="#">Jackets &amp; Blazers</a>
+        <a href="#" class="is-sale">Sale</a>
+        <a href="#">Learn</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="heart" viewBox="0 0 13.341 16"><path d="M13.2667 1.98115C12.9118 0.234417 11.6037 -0.344443 9.94077 0.193796C8.08517 0.792966 6.77712 2.4483 6.06732 4.20519C4.78969 3.16934 3.43095 2.03193 2.05192 2.10302C0.0543518 2.19442 -0.259986 3.91068 0.16589 5.50509C0.855405 8.0541 2.41696 10.5523 3.98864 12.6444C4.93166 13.8935 6.60474 16.473 8.49076 15.9246C10.1639 15.4371 11.3705 12.8475 11.7964 11.3343C12.2831 9.59773 12.496 7.76975 12.8205 5.99255C13.0639 4.73328 13.5202 3.27089 13.2667 1.98115Z"/></symbol>
+    <symbol id="heart-outline" viewBox="0 0 13.341 16"><path d="M13.2667 1.98115C12.9118 0.234417 11.6037 -0.344443 9.94077 0.193795C8.08517 0.792966 6.77712 2.4483 6.06732 4.20519C4.78969 3.16934 3.43095 2.03193 2.05192 2.10302C0.0543518 2.19442 -0.259986 3.91068 0.16589 5.50509C0.855405 8.0541 2.41696 10.5523 3.98864 12.6444C4.93166 13.8935 6.60474 16.473 8.49076 15.9246C10.1639 15.4371 11.3705 12.8475 11.7964 11.3343C12.2831 9.59773 12.496 7.76975 12.8205 5.99255C13.0639 4.73328 13.5202 3.27089 13.2667 1.98115ZM11.2488 7.58695C10.8229 9.88208 9.83938 16.4425 6.41209 13.5787C4.39424 11.8929 2.88339 8.86654 1.87954 6.46985C1.63618 5.89099 0.977083 3.78882 1.89982 3.40291C2.53863 3.13887 3.63374 4.12395 4.0799 4.44892C5.16487 5.2512 6.10788 6.05348 7.33481 6.66281C8.06489 7.01825 8.70371 5.93162 7.97364 5.56602C7.68972 5.42384 7.39566 5.24105 7.1016 5.01763C7.4058 4.1341 7.83167 3.32167 8.49076 2.65141C8.8558 2.24519 9.71024 1.76813 10.2071 1.50409C11.3932 1.07902 11.6933 1.98115 12.0499 2.60063C12.5467 3.46385 11.4313 6.61203 11.2488 7.58695Z"/></symbol>
+  </svg>
+
+    <div class="wrap50">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#">Shop All</a><span>/</span><a href="#">Tops</a><span>/</span><a href="#">Button-Ups &amp; Tops</a></nav>
+
+      <!-- Gallery + buy box -->
+      <section class="pdp">
+        <div class="gallery">
+          <div class="gallery__img"><img class="cover" src="summer-v2-assets/pdp20/gallery-1.jpg" alt="Eileen shirt in distressed indigo, front"></div>
+          <div class="gallery__img"><img class="cover" src="summer-v2-assets/pdp20/gallery-2.jpg" alt="Eileen shirt, alternate view"></div>
+          <div class="gallery__img"><img class="cover" src="summer-v2-assets/pdp20/gallery-3.jpg" alt="Eileen shirt, hand in pocket" loading="lazy"></div>
+          <div class="gallery__img"><img class="cover" src="summer-v2-assets/pdp20/gallery-4.jpg" alt="Eileen shirt, side view" loading="lazy"></div>
+          <div class="gallery__img"><img class="cover" src="summer-v2-assets/pdp20/gallery-5.jpg" alt="Eileen shirt on a stone walkway" loading="lazy"></div>
+          <div class="gallery__img"><img class="cover" src="summer-v2-assets/pdp20/gallery-6.png" alt="Eileen shirt, flat lay" loading="lazy"></div>
+        </div>
+
+        <div class="buy">
+          <div class="buy__inner">
+            <p class="buy__kicker">Hello, my name is...</p>
+            <h1 class="buy__title">Eileen</h1>
+            <p class="buy__sub">Relaxed Button-Up Shirt</p>
+            <div class="buy__rating"><span class="hearts" role="img" aria-label="4.7 out of 5"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><span class="heart-part" style="--fill:70%"><svg class="heart-part__bg" viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart-outline"/></svg><svg class="heart-part__fill" viewBox="0 0 13.341 16"><use href="#heart"/></svg></span></span><a class="buy__reviews" href="#reviews">219 Reviews</a></div>
+            <p class="buy__price">$288</p>
+            <p class="buy__color"><span>COLOR:</span><span>Distressed Indigo Wash</span></p>
+
+            <div class="swatch-group">
+              <p class="swatch-group__name">Famous Denim</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Seraphine on Indigo Denim"><i style="--sw:url(summer-v2-assets/pdp20/sw/REN3.png)"></i></button><button class="swatch" type="button" aria-label="Black"><i style="--sw:url(summer-v2-assets/pdp20/sw/BKCD.png)"></i></button><button class="swatch" type="button" aria-label="Vintage Dark Indigo Wash"><i style="--sw:url(summer-v2-assets/pdp20/sw/VDWD.png)"></i></button><button class="swatch is-selected" type="button" aria-label="Distressed Indigo Wash" aria-pressed="true"><i style="--sw:url(summer-v2-assets/pdp20/sw/DIWD.png)"></i></button><button class="swatch" type="button" aria-label="Vintage Stonewashed Indigo"><i style="--sw:url(summer-v2-assets/pdp20/sw/VWD.png)"></i></button><button class="swatch" type="button" aria-label="Classic Blue Wash"><i style="--sw:url(summer-v2-assets/pdp20/sw/CBWD.png)"></i></button><button class="swatch" type="button" aria-label="Nori"><i style="--sw:url(summer-v2-assets/pdp20/sw/NRCD.png)"></i></button><button class="swatch" type="button" aria-label="Adobe"><i style="--sw:url(summer-v2-assets/pdp20/sw/ADCD.png)"></i></button><button class="swatch" type="button" aria-label="Vintage White"><i style="--sw:url(summer-v2-assets/pdp20/sw/VWCD.png)"></i></button><button class="swatch" type="button" aria-label="White"><i style="--sw:url(summer-v2-assets/pdp20/sw/WCD.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Flannel</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Navy and Green Large Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/NGLP.png)"></i></button><button class="swatch" type="button" aria-label="Gold and Brown with Black Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/BRGP.png)"></i></button><button class="swatch" type="button" aria-label="Gold and Blue Large Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/LPGB.png)"></i></button><button class="swatch" type="button" aria-label="Sand and Brown with Cream Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/BCSP.png)"></i></button><button class="swatch" type="button" aria-label="Red and Navy Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/RNPL.png)"></i></button><button class="swatch" type="button" aria-label="White and Black with Red Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/WBRP.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Brushed Cotton</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Vintage Blue Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/VBPF.png)"></i></button><button class="swatch" type="button" aria-label="Vintage Red Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/VRPF.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Cashmere Touch</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Navy"><i style="--sw:url(summer-v2-assets/pdp20/sw/NHR.png)"></i></button><button class="swatch" type="button" aria-label="Cranberry and Navy Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/CNPF.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Corduroy</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Classic Navy"><i style="--sw:url(summer-v2-assets/pdp20/sw/CNYC.png)"></i></button><button class="swatch" type="button" aria-label="Peacock"><i style="--sw:url(summer-v2-assets/pdp20/sw/PCKC.png)"></i></button><button class="swatch" type="button" aria-label="Camel"><i style="--sw:url(summer-v2-assets/pdp20/sw/CAMC.png)"></i></button><button class="swatch" type="button" aria-label="Vintage White"><i style="--sw:url(summer-v2-assets/pdp20/sw/VWTC.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Triple Terry</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Black"><i style="--sw:url(summer-v2-assets/pdp20/sw/BLK.png)"></i></button><button class="swatch" type="button" aria-label="British Royal Navy"><i style="--sw:url(summer-v2-assets/pdp20/sw/BRNV.png)"></i></button><button class="swatch" type="button" aria-label="Classic Navy"><i style="--sw:url(summer-v2-assets/pdp20/sw/CLNY.png)"></i></button><button class="swatch" type="button" aria-label="White"><i style="--sw:url(summer-v2-assets/pdp20/sw/WHT.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Superluxe</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Multi Blue Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/MSBU.png)"></i></button><button class="swatch" type="button" aria-label="The Chloe Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/CH01.png)"></i></button><button class="swatch" type="button" aria-label="The Ellen Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/CH02.png)"></i></button><button class="swatch" type="button" aria-label="Blue and White Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/WHSS.png)"></i></button><button class="swatch" type="button" aria-label="Green and White Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/GRNS.png)"></i></button><button class="swatch" type="button" aria-label="White and Red Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/WRS.png)"></i></button><button class="swatch" type="button" aria-label="Magenta"><i style="--sw:url(summer-v2-assets/pdp20/sw/MNGA.png)"></i></button><button class="swatch" type="button" aria-label="Tan and White Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/TNSW.png)"></i></button><button class="swatch" type="button" aria-label="Peach Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/PCHS.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Cotton</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Blue Stripe with Navy Stars"><i style="--sw:url(summer-v2-assets/pdp20/sw/BSNS.png)"></i></button><button class="swatch" type="button" aria-label="Blue Stripe with Red Stars"><i style="--sw:url(summer-v2-assets/pdp20/sw/BSRS.png)"></i></button><button class="swatch" type="button" aria-label="NYC Apples"><i style="--sw:url(summer-v2-assets/pdp20/sw/EXAP.png)"></i></button><button class="swatch" type="button" aria-label="Red Stripe with Navy Stars"><i style="--sw:url(summer-v2-assets/pdp20/sw/RDSN.png)"></i></button><button class="swatch" type="button" aria-label="Red Bows"><i style="--sw:url(summer-v2-assets/pdp20/sw/RDBW.png)"></i></button><button class="swatch" type="button" aria-label="Pink and Yellow with Blue Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/PYBS.png)"></i></button><button class="swatch" type="button" aria-label="Palm Trees"><i style="--sw:url(summer-v2-assets/pdp20/sw/PLTR.png)"></i></button><button class="swatch" type="button" aria-label="Green and Pink with Blue Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/GPOB.png)"></i></button><button class="swatch" type="button" aria-label="Pink Stripe with Hearts"><i style="--sw:url(summer-v2-assets/pdp20/sw/PSTH.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Fil Coupé Cotton</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Textured Natural Flowers"><i style="--sw:url(summer-v2-assets/pdp20/sw/TXNF.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Washed Linen</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Black"><i style="--sw:url(summer-v2-assets/pdp20/sw/BLN.png)"></i></button><button class="swatch" type="button" aria-label="Navy"><i style="--sw:url(summer-v2-assets/pdp20/sw/NYLN.png)"></i></button><button class="swatch" type="button" aria-label="Turquoise"><i style="--sw:url(summer-v2-assets/pdp20/sw/TQLN.png)"></i></button><button class="swatch" type="button" aria-label="Sunshine"><i style="--sw:url(summer-v2-assets/pdp20/sw/SULN.png)"></i></button><button class="swatch" type="button" aria-label="Sand"><i style="--sw:url(summer-v2-assets/pdp20/sw/SNLN.png)"></i></button><button class="swatch" type="button" aria-label="White"><i style="--sw:url(summer-v2-assets/pdp20/sw/WTLN.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Classic Linen</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Glitter Animal Print"><i style="--sw:url(summer-v2-assets/pdp20/sw/GLTP.png)"></i></button><button class="swatch" type="button" aria-label="Brown Plaid"><i style="--sw:url(summer-v2-assets/pdp20/sw/PLBR.png)"></i></button><button class="swatch" type="button" aria-label="Blue and Navy Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/BTNS.png)"></i></button><button class="swatch" type="button" aria-label="Blue"><i style="--sw:url(summer-v2-assets/pdp20/sw/NYBL.png)"></i></button><button class="swatch" type="button" aria-label="Blue and Red Textured Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/BRTS.png)"></i></button><button class="swatch" type="button" aria-label="Bright Blue Floral"><i style="--sw:url(summer-v2-assets/pdp20/sw/FLBB.png)"></i></button><button class="swatch" type="button" aria-label="Turquoise and White Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/TQWS.png)"></i></button><button class="swatch" type="button" aria-label="Thin Blue Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/THNL.png)"></i></button><button class="swatch" type="button" aria-label="Multicolor Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/MCPS.png)"></i></button><button class="swatch" type="button" aria-label="White and Turquoise Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/WTQS.png)"></i></button><button class="swatch" type="button" aria-label="Brown Glitter Stripe"><i style="--sw:url(summer-v2-assets/pdp20/sw/BRGS.png)"></i></button><button class="swatch" type="button" aria-label="White Palm Trees"><i style="--sw:url(summer-v2-assets/pdp20/sw/PMTL.png)"></i></button><button class="swatch" type="button" aria-label="White"><i style="--sw:url(summer-v2-assets/pdp20/sw/WHL.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Made with Liberty Fabric</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Pink and Red with Blue Floral"><i style="--sw:url(summer-v2-assets/pdp20/sw/PRBG.png)"></i></button><button class="swatch" type="button" aria-label="Vintage Bouquet"><i style="--sw:url(summer-v2-assets/pdp20/sw/FPTG.png)"></i></button><button class="swatch" type="button" aria-label="Spring Bouquet"><i style="--sw:url(summer-v2-assets/pdp20/sw/SMSC.png)"></i><span class="swatch__sale">Sale</span></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Organic Voile</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Turquoise"><i style="--sw:url(summer-v2-assets/pdp20/sw/F302.png)"></i></button><button class="swatch" type="button" aria-label="Raspberry"><i style="--sw:url(summer-v2-assets/pdp20/sw/F301.png)"></i></button><button class="swatch" type="button" aria-label="White"><i style="--sw:url(summer-v2-assets/pdp20/sw/F000.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Superluxe Regenerative Cotton</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="French Blue"><i style="--sw:url(summer-v2-assets/pdp20/sw/RGN2.png)"></i></button><button class="swatch" type="button" aria-label="White"><i style="--sw:url(summer-v2-assets/pdp20/sw/RGN1.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Casual Cotton</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="White"><i style="--sw:url(summer-v2-assets/pdp20/sw/WCB.png)"></i></button></div>
+            </div>
+            <div class="swatch-group">
+              <p class="swatch-group__name">Italian Featherweight Poplin</p>
+              <div class="swatches"><button class="swatch" type="button" aria-label="Black"><i style="--sw:url(summer-v2-assets/pdp20/sw/L001.png)"></i></button></div>
+            </div>
+
+            <div class="buy__sizes">
+              <h2>Size:</h2>
+              <div class="sizes"><button class="size" type="button">XXS</button><button class="size" type="button">XS</button><button class="size" type="button">S</button><button class="size" type="button">M</button><button class="size" type="button">L</button><button class="size" type="button">XL</button></div>
+            </div>
+            <p class="buy__links"><a href="#">What’s my size?</a><span></span><a href="#">Size Chart</a></p>
+            <a class="btn btn--block" href="#">Select Size — $288</a>
+            <p class="buy__wish">♡<a href="#">Add to wishlist</a></p>
+
+            <div class="highlights">
+              <h2>Product Highlights</h2>
+              <ul>
+                <li>Our amazing “wear in threes” design that shirt</li>
+                <li>Designed for a relaxed fit</li>
+                <li>Made in Italy</li>
+                <li>Famous Denim, 100% Cotton</li>
+              </ul>
+            </div>
+
+            <div class="pdp-accordion">
+              <details><summary>Description</summary><p>Our signature button-up in a softly distressed indigo wash, cut for an easy, relaxed fit.</p></details>
+              <details><summary>Fabric + Care</summary><p>100% cotton. Machine wash cold, hang dry.</p></details>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Editorial band -->
+    <section class="edit-band">
+      <img src="summer-v2-assets/pdp20/hero-edit.jpg" alt="The Jessica Springsteen Edit — shop the edit" loading="lazy">
+    </section>
+
+    <!-- You Might Also Love -->
+    <section class="recs">
+      <div class="wrap50">
+        <div class="recs__head">
+          <button class="recs__nav recs__nav--prev" type="button" aria-label="Previous"><svg viewBox="0 0 6.9245 12.59" aria-hidden="true"><path d="M0 6.295L6.295 12.59L6.9245 11.9605L1.259 6.295L6.9245 0.6295L6.295 0L0 6.295Z"/></svg></button>
+          <h2 class="recs__title">You Might Also Love</h2>
+          <button class="recs__nav recs__nav--next" type="button" aria-label="Next"><svg viewBox="0 0 6.9245 12.59" aria-hidden="true"><path d="M0 6.295L6.295 12.59L6.9245 11.9605L1.259 6.295L6.9245 0.6295L6.295 0L0 6.295Z"/></svg></button>
+        </div>
+        <div class="recs__track">
+          <a class="rec" href="#">
+            <div class="rec__img"><img class="cover" src="summer-v2-assets/pdp20/rec-1.jpg" alt="" loading="lazy"></div>
+            <p class="rec__name">Eileen</p>
+            <p class="rec__fabric">famous denim</p>
+            <p class="rec__price">$288</p>
+            <p class="rec__colors">More colors</p>
+          </a>
+          <a class="rec" href="#">
+            <div class="rec__img"><img class="cover" src="summer-v2-assets/pdp20/rec-2.jpg" alt="" loading="lazy"></div>
+            <p class="rec__name">Eileen</p>
+            <p class="rec__fabric">famous denim</p>
+            <p class="rec__price">$288</p>
+            <p class="rec__colors">More colors</p>
+          </a>
+          <a class="rec" href="#">
+            <div class="rec__img"><img class="cover" src="summer-v2-assets/pdp20/rec-3.jpg" alt="" loading="lazy"></div>
+            <p class="rec__name">Eileen</p>
+            <p class="rec__fabric">famous denim</p>
+            <p class="rec__price">$288</p>
+            <p class="rec__colors">More colors</p>
+          </a>
+          <a class="rec" href="#">
+            <div class="rec__img"><img class="cover" src="summer-v2-assets/pdp20/rec-4.jpg" alt="" loading="lazy"></div>
+            <p class="rec__name">Eileen</p>
+            <p class="rec__fabric">famous denim</p>
+            <p class="rec__price">$288</p>
+            <p class="rec__colors">More colors</p>
+          </a>
+          <a class="rec" href="#">
+            <div class="rec__img"><img class="cover" src="summer-v2-assets/pdp20/rec-5.jpg" alt="" loading="lazy"></div>
+            <p class="rec__name">Eileen</p>
+            <p class="rec__fabric">famous denim</p>
+            <p class="rec__price">$288</p>
+            <p class="rec__colors">More colors</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="reviews" id="reviews">
+      <h2 class="reviews__title">Customer Reviews</h2>
+      <div class="wrap50">
+        <div class="reviews__body">
+          <div class="summary">
+            <div>
+              <p class="summary__score">4.7</p>
+              <span class="hearts" role="img" aria-label="4.7 out of 5"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><span class="heart-part" style="--fill:70%"><svg class="heart-part__bg" viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart-outline"/></svg><svg class="heart-part__fill" viewBox="0 0 13.341 16"><use href="#heart"/></svg></span></span>
+              <p class="summary__count">Based on 219 reviews</p>
+            </div>
+            <div class="histogram">
+            <div class="histogram__row"><span>5</span><span class="hearts hearts--hist"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg></span><span class="track"><i style="--pct:95%"></i></span><a class="link-denim" href="#">185</a></div>
+            <div class="histogram__row"><span>4</span><span class="hearts hearts--hist"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg></span><span class="track"><i style="--pct:5%"></i></span><a class="link-denim" href="#">10</a></div>
+            <div class="histogram__row"><span>3</span><span class="hearts hearts--hist"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg></span><span class="track"><i style="--pct:7.3%"></i></span><a class="link-denim" href="#">14</a></div>
+            <div class="histogram__row"><span>2</span><span class="hearts hearts--hist"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg></span><span class="track"><i style="--pct:4.1%"></i></span><a class="link-denim" href="#">8</a></div>
+            <div class="histogram__row"><span>1</span><span class="hearts hearts--hist"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg></span><span class="track"><i style="--pct:1.8%"></i></span><a class="link-denim" href="#">2</a></div>
+            </div>
+            <div class="fit">
+              <p class="fit__label">FIT</p>
+              <div class="fit__track"><i style="--at:48%"></i></div>
+              <p class="fit__value">True to size</p>
+            </div>
+            <a class="btn btn--accent" href="#">Write a Review</a>
+          </div>
+        </div>
+      </div>
+      <div class="reviews__rule"></div>
+      <div class="wrap50">
+        <div class="reviews__body">
+          <div class="media">
+            <p class="kicker-caps">Reviews with Images</p>
+            <div class="media__row">
+              <img src="summer-v2-assets/pdp20/ugc-1.jpg" alt="" loading="lazy">
+              <img src="summer-v2-assets/pdp20/ugc-2.jpg" alt="" loading="lazy">
+              <img src="summer-v2-assets/pdp20/ugc-3.jpg" alt="" loading="lazy">
+              <img src="summer-v2-assets/pdp20/ugc-4.jpg" alt="" loading="lazy">
+            </div>
+          </div>
+          <div class="filters">
+            <button class="pill pill--search" type="button">Search Reviews</button>
+            <button class="pill pill--rating" type="button">Rating</button>
+            <button class="pill pill--media" type="button">With Media&nbsp;&nbsp;○</button>
+            <button class="pill pill--fit" type="button">Fit</button>
+          </div>
+          <div class="topics">
+            <p class="topics__label">POPULAR TOPICS</p>
+            <div class="topics__row">
+              <button class="chip" type="button">SIZE</button><button class="chip" type="button">FIT</button><button class="chip" type="button">LENGTH</button><button class="chip" type="button">COLOR</button><button class="chip" type="button">FABRIC</button><button class="chip" type="button">MATERIAL</button><button class="chip" type="button">SHIRT</button>
+              <a class="topics__more" href="#">SHOW MORE</a>
+              <span class="topics__sort">SORT BY:  MOST RELEVANT  ⌄</span>
+            </div>
+          </div>
+        <article class="review">
+          <div>
+            <p class="review__name">Colleen D.</p>
+            <p class="verified">✓ VERIFIED BUYER</p>
+            <p class="review__stats">SIZE  S
+HEIGHT  5'2'' – 5'3''
+WEIGHT  120–130</p>
+          </div>
+          <div>
+            <div class="review__head"><span class="hearts hearts--sm" role="img" aria-label="5 out of 5"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg></span><h3 class="review__title">Simply perfect shirt!</h3></div>
+            <p class="review__body">I look forward to wearing this shirt when it’s cooler. It is the softest shirt I own! It is super soft and feels luxurious. It runs true to size — I usually wear a small and this fits well…</p>
+            <p class="review__product">PRODUCT REVIEWED:  EILEEN LIGHT GRAY, ITALIAN CASHMERE TOUCH</p>
+            <p class="review__helpful">WAS THIS REVIEW HELPFUL?      👍 0      👎 0</p>
+          </div>
+          <div>
+            <p class="review__date">07/14/26</p>
+            <div class="fit">
+              <p class="fit__label">FIT</p>
+              <div class="fit__track"><i style="--at:47%"></i></div>
+              <p class="fit__value">True to size</p>
+            </div>
+          </div>
+        </article>
+        <article class="review">
+          <div>
+            <p class="review__name">Rebecca G.</p>
+            <p class="verified">✓ VERIFIED BUYER</p>
+            <p class="review__stats">SIZE  S
+HEIGHT  5'2'' – 5'3''
+WEIGHT  130–140</p>
+          </div>
+          <div>
+            <div class="review__head"><span class="hearts hearts--sm" role="img" aria-label="5 out of 5"><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg><svg viewBox="0 0 13.341 16"><use href="#heart"/></svg></span><h3 class="review__title">Beautiful!</h3></div>
+            <p class="review__body">Unwrapped this shirt tonight, and I’m glad I finally got it. The Italian cashmere is beautiful — thin, but cozy. The texture of the material is just gorgeous. Looking forward to wearing it in the fall!</p>
+            <p class="review__product">PRODUCT REVIEWED:  EILEEN LIGHT GRAY, ITALIAN CASHMERE TOUCH</p>
+            <p class="review__helpful">WAS THIS REVIEW HELPFUL?      👍 0      👎 0</p>
+          </div>
+          <div>
+            <p class="review__date">07/31/26</p>
+            <div class="fit">
+              <p class="fit__label">FIT</p>
+              <div class="fit__track"><i style="--at:47%"></i></div>
+              <p class="fit__value">True to size</p>
+            </div>
+          </div>
+        </article>
+          <p class="pager">1 2 3 4 5 ›</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="f20">
+    <div class="wrap50">
+      <div class="f20__cols">
+        <div class="f20__join">
+          <h2>Join Our Family</h2>
+          <p>15% off your first order!</p>
+          <div class="f20__social">
+            <a href="#"><img src="summer-v2-assets/pdp20/facebook.svg" alt="Facebook" loading="lazy"></a>
+            <a href="#"><img src="summer-v2-assets/pdp20/instagram.svg" alt="Instagram" loading="lazy"></a>
+            <a href="#"><img src="summer-v2-assets/pdp20/pinterest.svg" alt="Pinterest" loading="lazy"></a>
+          </div>
+        </div>
+        <div class="f20__col">
+          <h3>Customer Care</h3>
+          <ul><li><a href="#">FAQs</a></li><li><a href="#">Returns</a></li><li><a href="#">EU Right of Withdrawal</a></li><li><a href="#">Loyalty Program</a></li><li><a href="#">Gift Cards</a></li><li><a href="#">Fit Guides</a></li><li><a href="#">Contact Us</a></li></ul>
+        </div>
+        <div class="f20__col">
+          <h3>About Us</h3>
+          <ul><li><a href="#">Our Story</a></li><li><a href="#">The $20M Giving Pledge</a></li><li><a href="#">Impact Report</a></li><li><a href="#">In the News</a></li><li><a href="#">Careers</a></li></ul>
+        </div>
+        <div class="f20__col">
+          <h3>Discover</h3>
+          <ul><li><a href="#">New Arrivals</a></li><li><a href="#">Best Sellers</a></li><li><a href="#">Dresses</a></li><li><a href="#">Women’s Button Up Shirts</a></li><li><a href="#">Women’s Travel Sets</a></li><li><a href="#">Women’s Pants and Jeans</a></li><li><a href="#">Women’s Sweaters</a></li><li><a href="#">Sale</a></li><li><a href="#">The Journal</a></li></ul>
+        </div>
+        <div class="f20__col">
+          <h3>Visit</h3>
+          <ul><li><a href="#">Madison Avenue Flagship in NYC</a></li><li><a href="#">Store Locator</a></li><li><a href="#">Trunk Shows</a></li><li><a href="#">ReLoved by Frank &amp; Eileen</a></li><li><a href="#">The Frank &amp; Eileen Foundation</a></li><li><a href="#">Digital Catalog</a></li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="f20__tagline">
+      <div class="wrap50" style="position:relative">
+        <h2>Enter as Strangers,<br>Leave as friends.</h2>
+        <div class="f20__seals">
+          <img src="summer-v2-assets/pdp20/seal-women.png" alt="Certified woman-owned, woman-led" loading="lazy">
+          <img src="summer-v2-assets/pdp20/seal-pledge.png" alt="Giving $20 million over 10 years" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="f20__legal">
+      <div class="wrap50">
+        <ul>
+          <li><span class="dim">©</span> Frank &amp; Eileen <span class="dim">2026</span></li>
+          <li>Privacy |</li><li>Terms |</li><li>Accessibility |</li><li>Data Requests |</li><li>Cookie Preferences |</li><li>Sitemap |</li><li>Do not sell or share my info</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->
+  <style>
+    #fe-accent-fab, #fe-accent-panel {
+      position: fixed; left: 22px; bottom: 22px; z-index: 9999;
+      font-family: var(--sans); color: var(--ink);
+    }
+    #fe-accent-fab {
+      width: 46px; height: 46px; padding: 0; font-size: 0; cursor: pointer;
+      border: 1px solid rgba(35, 31, 28, .18); border-radius: 50%;
+      background: linear-gradient(135deg, var(--mauve) 0 50%, var(--teal) 50% 100%);
+      box-shadow: 0 4px 14px rgba(35, 31, 28, .22);
+      transition: transform .15s ease;
+    }
+    #fe-accent-fab:hover { transform: scale(1.06); }
+    #fe-accent-panel {
+      width: 258px; padding: 14px 16px 16px;
+      background: #fff; border: 1px solid rgba(35, 31, 28, .14); border-radius: 8px;
+      box-shadow: 0 8px 28px rgba(35, 31, 28, .18);
+    }
+    .fe-accent__head { display: flex; align-items: center; justify-content: space-between; }
+    .fe-accent__title {
+      font-size: 10px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--ink-soft);
+    }
+    .fe-accent__close {
+      padding: 0 0 0 10px; border: 0; background: none; cursor: pointer;
+      font-size: 16px; line-height: 1; color: var(--ink-soft);
+    }
+    .fe-accent__close:hover { color: var(--ink); }
+
+    .fe-accent__field { margin-top: 12px; }
+    .fe-accent__label {
+      display: block; margin-bottom: 5px;
+      font-size: 11px; color: var(--ink-soft);
+    }
+    .fe-accent__picker { position: relative; }
+    .fe-accent__select {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; height: 30px; padding: 0 8px; cursor: pointer;
+      font-family: inherit; font-size: 11px; color: var(--ink); text-align: left;
+      background: #fff; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+    .fe-accent__select:hover { border-color: rgba(35, 31, 28, .4); }
+    .fe-accent__sw {
+      flex: 0 0 16px; width: 16px; height: 16px; border-radius: 3px;
+      border: 1px solid rgba(35, 31, 28, .15);
+    }
+    .fe-accent__name { flex: 1 1 auto; }
+    .fe-accent__hex {
+      color: var(--ink-soft); font-size: 10px; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .fe-accent__caret { flex: 0 0 auto; color: var(--ink-soft); font-size: 9px; }
+
+    .fe-accent__menu {
+      /* The panel is pinned to the bottom of the viewport, so menus open upward. */
+      position: absolute; left: 0; right: 0; bottom: calc(100% + 4px); z-index: 2;
+      max-height: 214px; overflow-y: auto; margin: 0; padding: 4px; list-style: none;
+      background: #fff; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+      box-shadow: 0 6px 20px rgba(35, 31, 28, .18);
+    }
+    .fe-accent__opt {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; padding: 6px 7px; cursor: pointer;
+      font-family: inherit; font-size: 11px; color: var(--ink); text-align: left;
+      background: none; border: 0; border-radius: 3px;
+    }
+    .fe-accent__opt:hover, .fe-accent__opt[aria-selected="true"] { background: rgba(35, 31, 28, .06); }
+    .fe-accent__opt .fe-accent__note {
+      color: var(--ink-soft); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .fe-accent__sep { margin: 4px 2px; border-top: 1px solid rgba(35, 31, 28, .12); }
+
+    /* An author `display` beats the UA's [hidden] rule, so restore it explicitly. */
+    #fe-accent-panel [hidden] { display: none !important; }
+
+    .fe-accent__custom { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .fe-accent__custom input[type="color"] {
+      flex: 0 0 30px; width: 30px; height: 26px; padding: 0; cursor: pointer;
+      background: none; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+    .fe-accent__custom input[type="text"] {
+      flex: 1 1 auto; min-width: 0; height: 26px; padding: 0 7px;
+      font-family: inherit; font-size: 11px; letter-spacing: .04em; color: var(--ink);
+      background: #fff; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+
+    .fe-accent__actions { display: flex; gap: 8px; margin-top: 16px; }
+    .fe-accent__btn {
+      flex: 1 1 0; height: 28px; cursor: pointer;
+      font-family: inherit; font-size: 10px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+      background: none; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+    .fe-accent__btn:hover { color: var(--ink); border-color: rgba(35, 31, 28, .4); }
+    @media print { #fe-accent-fab, #fe-accent-panel { display: none !important; } }
+  </style>
+
+  <button id="fe-accent-fab" type="button" title="Accent colors" aria-label="Accent colors"></button>
+
+  <div id="fe-accent-panel" hidden>
+    <div class="fe-accent__head">
+      <span class="fe-accent__title">Accent Colors</span>
+      <button class="fe-accent__close" type="button" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="fe-accent__field" data-k="primary">
+      <span class="fe-accent__label">primary</span>
+      <div class="fe-accent__picker">
+        <button class="fe-accent__select" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="fe-accent__sw"></span>
+          <span class="fe-accent__name"></span>
+          <span class="fe-accent__hex"></span>
+          <span class="fe-accent__caret">&#9662;</span>
+        </button>
+        <ul class="fe-accent__menu" role="listbox" aria-label="Accent primary" hidden></ul>
+      </div>
+      <div class="fe-accent__custom" hidden>
+        <input type="color" aria-label="Custom accent primary">
+        <input type="text" maxlength="7" spellcheck="false" aria-label="Custom accent primary hex">
+      </div>
+    </div>
+
+    <div class="fe-accent__field" data-k="pop">
+      <span class="fe-accent__label">pop</span>
+      <div class="fe-accent__picker">
+        <button class="fe-accent__select" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="fe-accent__sw"></span>
+          <span class="fe-accent__name"></span>
+          <span class="fe-accent__hex"></span>
+          <span class="fe-accent__caret">&#9662;</span>
+        </button>
+        <ul class="fe-accent__menu" role="listbox" aria-label="Accent pop" hidden></ul>
+      </div>
+      <div class="fe-accent__custom" hidden>
+        <input type="color" aria-label="Custom accent pop">
+        <input type="text" maxlength="7" spellcheck="false" aria-label="Custom accent pop hex">
+      </div>
+    </div>
+
+    <div class="fe-accent__actions">
+      <button class="fe-accent__btn" type="button" data-act="copy">Copy link</button>
+      <button class="fe-accent__btn" type="button" data-act="reset">Reset</button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var KEY = 'fe-mockup-accents';
+    var root = document.documentElement;
+    var fab = document.getElementById('fe-accent-fab');
+    var panel = document.getElementById('fe-accent-panel');
+    var copyBtn = panel.querySelector('[data-act="copy"]');
+
+    /* Seasonal accents from the Figma palette. */
+    var PALETTE = [
+      { name: 'Mauve', hex: '#98685f', note: 'current' },
+      { name: 'Teal',  hex: '#537a82', note: 'current' },
+      { name: 'Green', hex: '#74825e', note: 'Aug' },
+      { name: 'Rose',  hex: '#9d6b62', note: 'Aug' },
+      { name: 'Rust',  hex: '#9e462d', note: 'Sept' },
+      { name: 'Tan',   hex: '#e2a671', note: 'Sept' },
+      { name: 'Blue',  hex: '#81a7af', note: 'Jan' }
+    ];
+
+    function clean(hex) {
+      if (typeof hex !== 'string') return null;
+      var h = hex.trim().replace(/^#/, '');
+      if (/^[0-9a-f]{3}$/i.test(h)) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return /^[0-9a-f]{6}$/i.test(h) ? '#' + h.toLowerCase() : null;
+    }
+
+    /* Mix toward black (0) to darken or white (255) to lighten. */
+    function mix(hex, amt, target) {
+      var n = parseInt(hex.slice(1), 16);
+      return '#' + [16, 8, 0].map(function (shift) {
+        var c = (n >> shift) & 255;
+        return ('0' + Math.round(c + (target - c) * amt).toString(16)).slice(-2);
+      }).join('');
+    }
+
+    function named(hex) {
+      for (var i = 0; i < PALETTE.length; i++) if (PALETTE[i].hex === hex) return PALETTE[i];
+      return null;
+    }
+
+    var cs = getComputedStyle(root);
+    var DEFAULTS = {
+      primary: clean(cs.getPropertyValue('--mauve')) || '#98685f',
+      pop: clean(cs.getPropertyValue('--teal')) || '#537a82'
+    };
+
+    function isDefault(s) {
+      return s.primary === DEFAULTS.primary && s.pop === DEFAULTS.pop;
+    }
+
+    function apply(s) {
+      root.style.setProperty('--mauve', s.primary);
+      root.style.setProperty('--mauve-dark', mix(s.primary, .12, 0));
+      root.style.setProperty('--mauve-soft', mix(s.primary, .18, 255));
+      root.style.setProperty('--teal', s.pop);
+      root.style.setProperty('--teal-script', s.pop);
+    }
+
+    function linkFor(s) {
+      var url = new URL(location.href);
+      url.searchParams.set('primary', s.primary.slice(1));
+      url.searchParams.set('pop', s.pop.slice(1));
+      return url.href;
+    }
+
+    function persist(s) {
+      try {
+        if (isDefault(s)) localStorage.removeItem(KEY);
+        else localStorage.setItem(KEY, s.primary + ',' + s.pop);
+      } catch (e) {}
+      /* file:// has an opaque origin, so replaceState throws there — Copy link still works. */
+      try {
+        if (isDefault(s)) {
+          var url = new URL(location.href);
+          url.searchParams.delete('primary');
+          url.searchParams.delete('pop');
+          history.replaceState(null, '', url.href);
+        } else {
+          history.replaceState(null, '', linkFor(s));
+        }
+      } catch (e) {}
+    }
+
+    function read() {
+      var q = new URLSearchParams(location.search);
+      var p = clean(q.get('primary'));
+      var o = clean(q.get('pop'));
+      if (p || o) return { primary: p || DEFAULTS.primary, pop: o || DEFAULTS.pop };
+      try {
+        var saved = (localStorage.getItem(KEY) || '').split(',');
+        p = clean(saved[0]);
+        o = clean(saved[1]);
+        if (p || o) return { primary: p || DEFAULTS.primary, pop: o || DEFAULTS.pop };
+      } catch (e) {}
+      return { primary: DEFAULTS.primary, pop: DEFAULTS.pop };
+    }
+
+    var state = read();
+
+    /* ---- one dropdown per accent ---- */
+    var fields = {};
+
+    Array.prototype.forEach.call(panel.querySelectorAll('.fe-accent__field'), function (el) {
+      var k = el.dataset.k;
+      var f = fields[k] = {
+        el: el,
+        button: el.querySelector('.fe-accent__select'),
+        menu: el.querySelector('.fe-accent__menu'),
+        sw: el.querySelector('.fe-accent__sw'),
+        name: el.querySelector('.fe-accent__name'),
+        hex: el.querySelector('.fe-accent__hex'),
+        custom: el.querySelector('.fe-accent__custom'),
+        colorIn: el.querySelector('input[type="color"]'),
+        textIn: el.querySelector('input[type="text"]')
+      };
+
+      PALETTE.forEach(function (c) {
+        var li = document.createElement('li');
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'fe-accent__opt';
+        b.setAttribute('role', 'option');
+        b.dataset.hex = c.hex;
+        b.innerHTML = '<span class="fe-accent__sw" style="background:' + c.hex + '"></span>' +
+          '<span class="fe-accent__name"></span>' +
+          '<span class="fe-accent__hex"></span>' +
+          '<span class="fe-accent__note"></span>';
+        b.querySelector('.fe-accent__name').textContent = c.name;
+        b.querySelector('.fe-accent__hex').textContent = c.hex.toUpperCase();
+        b.querySelector('.fe-accent__note').textContent = c.note;
+        b.addEventListener('click', function () {
+          set(k, c.hex);
+          closeMenu(f);
+          showCustom(f, false);
+        });
+        li.appendChild(b);
+        f.menu.appendChild(li);
+      });
+
+      var sep = document.createElement('li');
+      sep.className = 'fe-accent__sep';
+      f.menu.appendChild(sep);
+
+      var li = document.createElement('li');
+      var cb = document.createElement('button');
+      cb.type = 'button';
+      cb.className = 'fe-accent__opt';
+      cb.setAttribute('role', 'option');
+      cb.dataset.custom = '1';
+      cb.textContent = 'Custom…';
+      cb.addEventListener('click', function () {
+        closeMenu(f);
+        showCustom(f, true);
+        f.colorIn.focus();
+      });
+      li.appendChild(cb);
+      f.menu.appendChild(li);
+
+      f.button.addEventListener('click', function () {
+        var open = !f.menu.hidden;
+        closeAll();
+        if (!open) openMenu(f);
+      });
+
+      function onCustom(el2) {
+        return function () {
+          var v = clean(el2.value);
+          if (!v) return; /* mid-typing in the hex field — wait for a valid value */
+          set(k, v);
+        };
+      }
+      f.colorIn.addEventListener('input', onCustom(f.colorIn));
+      f.textIn.addEventListener('input', onCustom(f.textIn));
+      f.textIn.addEventListener('blur', function () { f.textIn.value = state[k]; });
+    });
+
+    function openMenu(f) {
+      f.menu.hidden = false;
+      f.button.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu(f) {
+      f.menu.hidden = true;
+      f.button.setAttribute('aria-expanded', 'false');
+    }
+    function closeAll() {
+      Object.keys(fields).forEach(function (k) { closeMenu(fields[k]); });
+    }
+    function showCustom(f, on) {
+      f.custom.hidden = !on;
+    }
+
+    function set(k, hex) {
+      state[k] = hex;
+      apply(state);
+      sync();
+      persist(state);
+    }
+
+    function sync() {
+      Object.keys(fields).forEach(function (k) {
+        var f = fields[k];
+        var hex = state[k];
+        var entry = named(hex);
+        f.sw.style.background = hex;
+        f.name.textContent = entry ? entry.name : 'Custom';
+        f.hex.textContent = hex.toUpperCase();
+        f.colorIn.value = hex;
+        f.textIn.value = hex;
+        if (!entry) showCustom(f, true);
+        Array.prototype.forEach.call(f.menu.querySelectorAll('.fe-accent__opt'), function (b) {
+          b.setAttribute('aria-selected', b.dataset.hex === hex ? 'true' : 'false');
+        });
+      });
+    }
+
+    apply(state);
+    sync();
+
+    panel.querySelector('[data-act="reset"]').addEventListener('click', function () {
+      state = { primary: DEFAULTS.primary, pop: DEFAULTS.pop };
+      apply(state);
+      Object.keys(fields).forEach(function (k) { showCustom(fields[k], false); });
+      sync();
+      persist(state);
+    });
+
+    copyBtn.addEventListener('click', function () {
+      var link = linkFor(state);
+      var done = function () {
+        copyBtn.textContent = 'Copied';
+        setTimeout(function () { copyBtn.textContent = 'Copy link'; }, 1400);
+      };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = link;
+        ta.style.cssText = 'position:fixed;top:-100px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { window.prompt('Copy this link:', link); }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(done, fallback);
+      else fallback();
+    });
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      fab.hidden = open;
+      if (!open) closeAll();
+      try { localStorage.setItem(KEY + '-open', open ? '1' : '0'); } catch (e) {}
+    }
+
+    fab.addEventListener('click', function () { setOpen(true); });
+    panel.querySelector('.fe-accent__close').addEventListener('click', function () { setOpen(false); });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.hidden && !panel.contains(e.target) && e.target !== fab) closeAll();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAll();
+    });
+
+    var wasOpen = false;
+    try { wasOpen = localStorage.getItem(KEY + '-open') === '1'; } catch (e) {}
+    setOpen(wasOpen);
+  })();
+  </script>
+
+</body>
+</html>

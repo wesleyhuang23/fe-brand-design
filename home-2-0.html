@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home 2.0 — Desktop</title>
+  <!--
+    2.0 design of the desktop homepage, from the Figma file "Frank & Eileen 3.0 2026"
+    (LqvLmsxbbYe0EyHVGyjxy3), node 65:611. Same page as summer-v2-homepage.html apart from
+    the navigation, which uses the Generic nav: 11 Geist links instead of 5 Shirley ones.
+    Not part of the theme build. Photos in ./summer-v2-assets/ were extracted from the SVG
+    and pre-cropped to the frames Figma used, at 2×.
+
+    Type follows the Figma file "Frank & Eileen 2026" (LqvLmsxbbYe0EyHVGyjxy3): Canela Web
+    Light (weight 300, as in the theme), Geist, Shirley and Beth Ellen. Canela Web and Shirley
+    are licensed fonts, self-hosted from ./fonts/; Geist and Beth Ellen come from Google Fonts.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Geist:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Canela Web Light (300) — the brand serif, self-hosted from ./fonts/. Light is the only
+       weight the design uses, and the only one declared here: asking for any heavier weight
+       would make the browser fake a bold instead of using Canela's own cut.
+       Note: fonts/Canela-Light-Web.woff holds WOFF2 data despite its .woff name, so the
+       format hint below says woff2 — Safari and Firefox reject it when it says woff. */
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-Light-Web.woff') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Canela Web';
+      src: url('fonts/Canela-LightItalic-Web.woff2') format('woff2');
+      font-weight: 300;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    /* Shirley — the real brand font, self-hosted from ./fonts/ (the file is named
+       Bold, but its family is "Shirley Regular", which is the weight Figma uses). */
+    @font-face {
+      font-family: 'Shirley';
+      src: url('fonts/Shirley-Bold.woff2') format('woff2'),
+           url('fonts/Shirley-Bold.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #fbfbf8;
+      --ink: #231f1c;
+      --ink-soft: #77716c;
+      --mauve: #98685f;
+      --mauve-dark: #85574f;
+      --mauve-soft: #b07a70;
+      --teal: #537a82;
+      --teal-script: #4f7e8a;
+      --rust: #a0452f;
+      --panel: #edebe7;
+      --black: #222420;
+
+      --display: 'Canela Web', 'Canela', 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      --script: 'Beth Ellen', 'Bradley Hand', cursive;
+      --hand: 'Shirley', 'Marker Felt', cursive;
+
+      --wide: 1440px;
+      --gutter: 60px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; margin: 0; padding: 0; }
+    h1, h2, h3, h4, p { margin: 0; }
+    img { display: block; max-width: 100%; }
+
+    .wrap { max-width: var(--wide); margin: 0 auto; padding: 0 var(--gutter); }
+    .wrap--90 { padding: 0 90px; }
+    .wrap--90.wrap--bar { padding: 0 55px 0 90px; }
+
+    .cover { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ---------- Type ---------- */
+    .section-title {
+      font-family: var(--display); font-weight: 300;
+      font-size: 30px; line-height: 1.2; letter-spacing: .02em; text-align: center;
+    }
+    .discover .section-title { font-size: 31px; }
+    .section-sub { font-size: 14px; text-align: center; margin-top: 10px; }
+    .caps { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 36px; min-width: 150px; padding: 0 24px;
+      background: var(--black); color: var(--bg);
+      font-family: var(--sans); font-size: 12px; font-weight: 600; line-height: 16px;
+      letter-spacing: .12em; text-transform: uppercase;
+      transition: background .2s ease;
+    }
+    .btn:hover { background: #000; }
+    .btn--light { height: 32px; min-width: 132px; padding: 0 20px; background: var(--bg); color: var(--black); font-size: 11px; line-height: 15px; }
+    .btn--light:hover { background: #fff; }
+    .btn--accent { background: var(--mauve); }
+    .btn--accent:hover { background: var(--mauve-dark); }
+
+    /* ---------- Announcement ---------- */
+    .announce { background: var(--mauve); color: #fff; }
+    .announce__inner {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      height: 40px; font-family: var(--sans); font-size: 11px; letter-spacing: .1em;
+    }
+    .announce__left { letter-spacing: .06em; }
+    .announce__left em { font-family: var(--display); font-weight: 300; font-style: normal; font-size: 15px; margin-left: 3px; }
+    .announce__center { font-weight: 600; text-transform: uppercase; }
+    .announce__center .sep { margin: 0 10px; }
+    .announce__center a { font-weight: 600; }
+    .announce__right { justify-self: end; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    .announce__right .locale { letter-spacing: .06em; display: inline-flex; align-items: center; gap: 5px; }
+    .announce__right a { font-weight: 600; text-transform: uppercase; }
+
+    /* ---------- Header ---------- */
+    .header__bar { border-bottom: 1px solid var(--panel); }
+    .header__top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 83px; }
+    .logo { display: block; width: 236px; }
+    .logo img { width: 100%; height: auto; }
+    .header__tools { justify-self: end; display: flex; align-items: center; gap: 46px; }
+    .search {
+      display: flex; align-items: center; gap: 10px;
+      width: 140px; padding-bottom: 4px;
+      border-bottom: 1px solid var(--teal);
+      font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .header__icons { display: flex; gap: 14px; }
+    .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+    .icon--bag { width: 19px; height: 22px; fill: currentColor; stroke: none; }
+    .icon--sm { width: 18px; height: 18px; stroke-width: 1.6; }
+    .icon--heart { width: 21px; height: 22px; stroke-width: .9; }
+    .nav { display: flex; justify-content: center; gap: 21px; height: 46px; align-items: center; }
+    .nav a { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+    .nav a.is-sale { color: var(--mauve); }
+
+    /* ---------- Hero ---------- */
+    .hero { display: grid; grid-template-columns: 514fr 445fr 482fr; height: 598px; }
+    .hero__panel {
+      background: var(--panel);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 30px;
+    }
+    .hero__kicker { font-family: var(--script); font-size: 22px; line-height: 1; }
+    .hero__title { font-family: var(--display); font-weight: 300; font-size: 53px; line-height: 60px; margin-top: 8px; }
+    .hero__sub { font-size: 14px; margin: 26px 0 52px; }
+    .hero__media { overflow: hidden; }
+
+    /* ---------- Discover ---------- */
+    .discover { padding-block: 44px 36px; }
+    .discover__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 42px; }
+    .tile__img { aspect-ratio: 320 / 385; overflow: hidden; }
+    .tile__img img { transition: transform .6s ease; }
+    .tile:hover .tile__img img { transform: scale(1.03); }
+    .tile__label { display: block; text-align: center; margin-top: 20px; }
+
+    /* ---------- Meet Eileen ---------- */
+    .feature { padding-block: 36px 70px; }
+    .feature__media { position: relative; aspect-ratio: 1337 / 644; overflow: hidden; }
+    .feature__media::before {
+      /* The multiply scrim Figma lays over the left 534px of the banner. */
+      content: ''; position: absolute; inset: 0 60% 0 0; z-index: 1;
+      background: rgba(7, 8, 8, .3); mix-blend-mode: multiply;
+    }
+    .feature__media img { position: absolute; inset: 0; }
+    .feature__copy {
+      position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; color: #fff; padding: 0 60px 30px; z-index: 2;
+    }
+    .feature__kicker { font-family: var(--script); font-size: 24px; line-height: 1; transform: rotate(-4deg); }
+    .feature__title { font-family: var(--display); font-weight: 300; font-size: 44px; letter-spacing: .06em; line-height: 1; margin-top: 2px; }
+    .feature__sub { font-size: 14px; line-height: 1.2; max-width: 310px; margin: 24px 0 70px; }
+
+    /* ---------- Product cards ---------- */
+    .card__img { aspect-ratio: 230 / 300; overflow: hidden; }
+    .card__img img { transition: transform .6s ease; }
+    .card:hover .card__img img { transform: scale(1.03); }
+    .card__name { font-family: var(--hand); font-size: 20px; text-transform: uppercase; line-height: 1; margin-top: 22px; }
+    .card__meta { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+    .card__price { font-size: 13px; margin-top: 6px; }
+
+    /* ---------- New Arrivals ---------- */
+    .arrivals { padding-bottom: 138px; }
+    .arrivals__inner { display: grid; grid-template-columns: 301px 1fr; align-items: start; padding-left: 60px; }
+    .arrivals__intro { padding-top: 48px; }
+    .arrivals__title { font-family: var(--display); font-weight: 300; font-size: 32px; line-height: 1.2; letter-spacing: .02em; }
+    .arrivals__sub { font-size: 14px; margin: 10px 0 38px; }
+    .arrivals__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .arrivals__grid .card__name, .arrivals__grid .card__meta, .arrivals__grid .card__price { padding-left: 2px; }
+
+    /* ---------- Letter ---------- */
+    .letter { background: var(--panel); height: 620px; overflow: hidden; }
+    .letter__inner { display: grid; grid-template-columns: 640px 1fr; height: 100%; max-width: var(--wide); margin: 0 auto; }
+    .collage { position: relative; margin-left: -60px; height: 100%; }
+    .collage > * { position: absolute; }
+    .collage__fabric { left: 0; top: 88px; width: 485px; }
+    .collage__postcard { left: 405px; top: 28px; width: 192px; transform: rotate(9.13deg); transform-origin: 0 0; box-shadow: 1px 2px 6px rgba(0, 0, 0, .12); }
+    .collage__rack { left: 421px; top: 352px; width: 217px; }
+    .letter__copy { position: relative; align-self: center; padding: 0 0 0 57px; max-width: 610px; }
+    .letter__greeting { font-family: var(--script); font-size: 36px; line-height: 1; color: var(--mauve); }
+    .letter__body { font-family: var(--display); font-weight: 300; font-size: 21px; line-height: 1.6; max-width: 550px; margin: 26px 0 50px; }
+    .letter__sign { font-family: var(--display); font-weight: 300; font-size: 18px; margin-bottom: 44px; }
+    .letter__hearts { position: absolute; right: 0; bottom: 18px; width: 64px; }
+
+    /* ---------- Hand Picked ---------- */
+    .picks { padding: 62px 0 84px; text-align: center; }
+    .picks .wrap { max-width: 1440px; padding: 0 80px 0 80px; }
+    .picks__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 30px; margin: 38px 0 32px; text-align: left; }
+    .picks .card__name { margin-top: 24px; }
+
+    /* ---------- Footer ---------- */
+    .footer { background: var(--mauve); color: #fff; padding: 72px 0 70px; border-bottom: 1px solid rgba(255, 255, 255, .6); }
+    .footer__inner { display: grid; grid-template-columns: 360px repeat(4, 230px); }
+    .footer__join h3 { font-family: var(--display); font-weight: 300; font-size: 26px; line-height: 1.2; letter-spacing: .02em; }
+    .footer__join p { font-family: var(--sans); font-size: 15px; margin-top: 8px; }
+    .signup {
+      display: flex; align-items: center; width: 260px; height: 40px; margin: 22px 0 22px;
+      border: 1px solid rgba(255, 255, 255, .9);
+    }
+    .signup input {
+      flex: 1; min-width: 0; height: 100%; padding: 0 13px;
+      background: transparent; border: 0; outline: 0; color: #fff;
+      font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .signup input::placeholder { color: #fff; }
+    .signup button { background: none; border: 0; color: #fff; padding: 0 12px; cursor: pointer; display: flex; }
+    .social { display: flex; gap: 14px; }
+    .social svg { width: 24px; height: 24px; fill: #fff; }
+    .footer__col h4 { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin: -2px 0 18px; }
+    .footer__col li { font-family: var(--sans); font-weight: 300; font-size: 12px; letter-spacing: .05em; line-height: 26px; }
+    .footer__col a:hover { text-decoration: underline; }
+
+    .signoff { background: var(--black); color: #fff; padding: 58px 0 28px; }
+    .signoff__row { display: flex; align-items: center; justify-content: space-between; }
+    .signoff__motto { display: flex; align-items: flex-start; gap: 30px; font-family: var(--display); font-weight: 300; font-size: 34px; line-height: 1.2; letter-spacing: .02em; }
+    .signoff__motto svg { width: 54px; margin-top: 8px; }
+    .badges { display: flex; gap: 20px; margin-right: -12px; }
+    .badges img { width: 71px; height: 69px; }
+    .legal { margin-top: 34px; font-family: var(--sans); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+    .legal span { margin: 0 7px; }
+
+    /* ---------- Responsive (the SVG is desktop-only; these are best-guess reflows) ---------- */
+    @media (max-width: 1280px) {
+      .wrap--90 { padding: 0 50px; }
+      .footer__inner { grid-template-columns: 1.4fr repeat(4, 1fr); gap: 20px; }
+      .letter__inner { grid-template-columns: 50% 1fr; }
+    }
+    @media (max-width: 1080px) {
+      :root { --gutter: 30px; }
+      .nav { gap: 16px; }
+      .wrap--90 { padding: 0 30px; }
+      .hero { grid-template-columns: 1fr 1fr; height: auto; }
+      .hero__panel { grid-column: 1 / -1; padding: 64px 30px; }
+      .hero__media { aspect-ratio: 4 / 5; }
+      .feature__copy { width: 60%; }
+      .feature__media::before { inset: 0 40% 0 0; }
+      .arrivals { padding-bottom: 80px; }
+      .arrivals__inner { grid-template-columns: 1fr; padding-left: 0; }
+      .arrivals__intro { padding: 0 0 36px; text-align: center; }
+      .letter { height: auto; padding: 50px 0; }
+      .letter__inner { grid-template-columns: minmax(0, 1fr); padding: 0 30px; }
+      .collage { height: 620px; width: 640px; max-width: calc(100% + 60px); margin: 0 auto 0 -90px; }
+      .letter__copy { padding: 0; margin: 0 auto; }
+      .picks .wrap { padding: 0 30px; }
+      .picks__grid { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
+      .footer__inner { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+      .footer__join { grid-column: 1 / -1; }
+    }
+    @media (max-width: 767px) {
+      :root { --gutter: 16px; }
+      .wrap--90 { padding: 0 16px; }
+      .announce__left, .announce__right { display: none; }
+      .announce__inner { grid-template-columns: 1fr; justify-items: center; }
+      .header__top { grid-template-columns: 1fr auto; height: 64px; }
+      .header__top > div:first-child { display: none; }
+      .logo { width: 160px; }
+      .search { display: none; }
+      .nav { gap: 18px; height: auto; margin: 0; padding: 0 0 16px; justify-content: flex-start; overflow-x: auto; }
+      .nav a { white-space: nowrap; }
+      .hero { grid-template-columns: 1fr 1fr; }
+      .hero__title { font-size: 44px; }
+      .section-title, .arrivals__title { font-size: 30px; }
+      .discover__grid, .arrivals__grid, .picks__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; row-gap: 32px; }
+      .feature__media { aspect-ratio: 4 / 5; }
+      .feature__media::before { inset: 0; }
+      .feature__copy { width: 100%; padding: 0 24px; }
+      .collage { transform: scale(.6); transform-origin: 0 0; height: 372px; margin-left: -46px; }
+      .letter__body { font-size: 17px; line-height: 27px; }
+      .picks .wrap { padding: 0 16px; }
+      .footer__inner { grid-template-columns: 1fr 1fr; }
+      .signup { width: 100%; }
+      .signoff__row { flex-direction: column; align-items: flex-start; gap: 28px; }
+      .signoff__motto { font-size: 28px; gap: 16px; }
+      .legal { line-height: 2; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement bar -->
+  <div class="announce">
+    <div class="wrap--90 wrap--bar announce__inner">
+      <div class="announce__left">Visit <em>ReLoved</em></div>
+      <div class="announce__center">The Fall Collection<span class="sep">|</span><a href="#">Shop Now</a></div>
+      <div class="announce__right">
+        <span class="locale">United States (USD$)
+          <svg class="icon icon--sm" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M4 8l8 8 8-8"/></svg>
+        </span>
+        <span>|</span>
+        <a href="#">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header__bar">
+    <div class="wrap--90 wrap--bar">
+      <div class="header__top">
+        <div></div>
+        <a class="logo" href="#"><img src="summer-v2-assets/logo.svg" alt="Frank &amp; Eileen, est. 1947" width="236" height="46"></a>
+        <div class="header__tools">
+          <label class="search">
+            <svg class="icon icon--sm" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5"/><path d="M15 15l6 6"/></svg>
+            Search
+          </label>
+          <div class="header__icons">
+            <svg class="icon icon--heart" viewBox="0 0 20 21" aria-label="Wishlist"><path d="M4.18838 0.566128C3.09978 0.333387 2.22911 0.458208 1.61824 0.852474C1.05528 1.21594 0.641184 1.85559 0.501494 2.84358L0.47697 3.04536C0.320413 4.65512 0.856152 6.29479 1.68579 7.89777C2.51665 9.50299 3.60603 11.0075 4.51927 12.3759C5.64447 14.0436 6.65669 15.6843 7.82564 17.274C8.17013 17.7406 8.51984 18.3596 8.8409 18.8508C9.18332 19.3747 9.52908 19.8186 9.93425 20.1065C10.3899 20.4266 10.8237 20.5339 11.2418 20.4999C11.6692 20.4652 12.1203 20.2791 12.5915 19.9428C13.5435 19.2632 14.4848 18.0389 15.3435 16.5859C17.0545 13.6903 18.3263 10.0801 18.6563 8.75907C18.9339 7.63624 19.1008 6.49938 18.8899 5.6096C18.7872 5.17635 18.5982 4.81717 18.2998 4.54202C18.0011 4.26676 17.5616 4.04568 16.9084 3.94314C15.9514 3.79491 14.961 4.02321 13.9332 4.53103C12.9085 5.03745 11.8723 5.80994 10.8346 6.71496C10.7745 6.77643 10.6862 6.8361 10.5579 6.85026C10.3504 6.87306 10.2155 6.75373 10.1848 6.72544C10.1063 6.65293 10.0599 6.56093 10.0429 6.52792C9.99373 6.43204 9.94442 6.30498 9.90488 6.19551C9.86335 6.08051 9.82467 5.96264 9.7965 5.87479C9.78232 5.83056 9.77003 5.7928 9.76186 5.76642C9.75882 5.75661 9.75644 5.74825 9.75442 5.74166C8.80584 3.0176 6.90397 1.14774 4.18838 0.566128Z"/></svg>
+            <svg class="icon icon--bag" viewBox="0 0 104.57 120.61" aria-label="Bag"><path d="m9.88 47.69c.94 14.34 1.8 28.67 2.91 43 .46 6 .18 12.89 1.9 18.71 1.63 5.54 6.75 6.7 11.84 7.54 15.8 2.61 32 4.83 48 3 5.83-.65 14.21-1 19.07-4.63 4.27-3.14 2.95-11.38 3.12-15.91.61-16.57 1.12-33.14 1.79-49.7.12-2.9-4.38-2.89-4.5 0-.63 15.48-1.11 31-1.68 46.44-.13 3.57.16 7.5-.41 11-1 6.13-6.45 6.45-11.58 7.41a109.85 109.85 0 0 1 -27.17 1.19 232.51 232.51 0 0 1 -27.31-3.5 18 18 0 0 1 -3.69-.86c-3.38-1.43-3.47-4.37-3.79-7.56-.36-3.58-.64-7.17-.92-10.75-1.2-15.13-2.11-30.28-3.1-45.42-.19-2.87-4.69-2.89-4.5 0z"/><path d="m2.17 46.13a660.73 660.73 0 0 1 100.25 3.25c2.88.31 2.86-4.19 0-4.5a660.73 660.73 0 0 0 -100.25-3.25c-2.89.13-2.9 4.63 0 4.5z"/><path d="m37.39 55.08a124.17 124.17 0 0 1 3.73-27.18c1.82-7.81 4.81-17.4 12.2-21.7 13.77-7.99 13.05 15.18 13.68 22.8.75 9.78 1.6 19.55 2.25 29.34.19 2.88 4.69 2.9 4.5 0-.87-13.12-2-26.21-3-39.32-.61-8.6-3.75-21.61-15.33-18.57-9.42 2.47-14.42 12.21-17.16 20.76a117.68 117.68 0 0 0 -5.37 33.87c0 2.9 4.47 2.9 4.5 0z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="wrap--90 wrap--bar">
+      <nav class="nav">
+        <a href="#">Shop All</a>
+        <a href="#">New</a>
+        <a href="#">Featured</a>
+        <a href="#">Tops</a>
+        <a href="#">Sweaters</a>
+        <a href="#">Bottoms</a>
+        <a href="#">Dresses</a>
+        <a href="#">Sets</a>
+        <a href="#">Jackets &amp; Blazers</a>
+        <a href="#" class="is-sale">Sale</a>
+        <a href="#">Learn</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero__panel">
+        <p class="hero__kicker">Introducing the</p>
+        <h1 class="hero__title">Summer<br>Collection</h1>
+        <p class="hero__sub">Light, bright and fresh. Step out in summer style.</p>
+        <a class="btn" href="#">Shop Summer</a>
+      </div>
+      <div class="hero__media"><img class="cover" src="summer-v2-assets/hero-detail.jpg" alt="Close-up of a white linen button-up"></div>
+      <div class="hero__media"><img class="cover" src="summer-v2-assets/hero-friends.jpg" alt="Three friends laughing by the sea in linen shirts"></div>
+    </section>
+
+    <!-- Discover the Collection -->
+    <section class="discover wrap">
+      <h2 class="section-title">Discover the Collection</h2>
+      <p class="section-sub">Fresh-picked inspiration for the season ahead.</p>
+      <div class="discover__grid">
+        <a class="tile" href="#">
+          <div class="tile__img"><img class="cover" src="summer-v2-assets/discover-linens.jpg" alt="" loading="lazy"></div>
+          <span class="tile__label caps">Lived-in Linens</span>
+        </a>
+        <a class="tile" href="#">
+          <div class="tile__img"><img class="cover" src="summer-v2-assets/discover-button-ups.jpg" alt="" loading="lazy"></div>
+          <span class="tile__label caps">New Summer Button-Ups</span>
+        </a>
+        <a class="tile" href="#">
+          <div class="tile__img"><img class="cover" src="summer-v2-assets/discover-wexley.jpg" alt="" loading="lazy"></div>
+          <span class="tile__label caps">Wexley on Vacation</span>
+        </a>
+        <a class="tile" href="#">
+          <div class="tile__img"><img class="cover" src="summer-v2-assets/discover-layering.jpg" alt="" loading="lazy"></div>
+          <span class="tile__label caps">Light Layering</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Meet Eileen -->
+    <section class="feature wrap">
+      <div class="feature__media">
+        <img class="cover" src="summer-v2-assets/eileen-banner.jpg" alt="Denim Eileen shirt hanging in front of a wall of records" loading="lazy">
+        <div class="feature__copy">
+          <p class="feature__kicker">Meet</p>
+          <h2 class="feature__title">EILEEN</h2>
+          <p class="feature__sub">Our famous Eileen button-up now quilted for your pleasure. Lorem ipsum dolot</p>
+          <a class="btn btn--light" href="#">Shop Eileen</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="arrivals wrap">
+      <div class="arrivals__inner">
+        <div class="arrivals__intro">
+          <h2 class="arrivals__title">New Arrivals</h2>
+          <p class="arrivals__sub">Fresh styles and looks you’ll love.</p>
+          <a class="btn" href="#">Shop All</a>
+        </div>
+        <div class="arrivals__grid">
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/new-eileen.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">Eileen</p>
+            <p class="card__meta">Italian Cotton</p>
+            <p class="card__price">$258</p>
+          </a>
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/new-positano.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">Positano Set</p>
+            <p class="card__meta">Performance Linen</p>
+            <p class="card__price">$158</p>
+          </a>
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/new-maddie.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">Maddie</p>
+            <p class="card__meta">Washed Linen</p>
+            <p class="card__price">$238</p>
+          </a>
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/new-sheila.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">Sheila</p>
+            <p class="card__meta">Famous Denim</p>
+            <p class="card__price">$348</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Letter -->
+    <section class="letter">
+      <div class="letter__inner">
+        <div class="collage" aria-hidden="true">
+          <img class="collage__fabric" src="summer-v2-assets/collage-fabric.png" alt="" loading="lazy">
+          <img class="collage__postcard" src="summer-v2-assets/collage-postcard.jpg" alt="" loading="lazy">
+          <img class="collage__rack" src="summer-v2-assets/collage-rack.png" alt="" loading="lazy">
+        </div>
+        <div class="letter__copy">
+          <p class="letter__greeting">My dearest,</p>
+          <p class="letter__body">The fall collection came home this week — Italian denim, Irish wool, and the shirts we make better than anyone. We photographed everything in the house, where it belongs, among the frames and the letters and the tea.</p>
+          <p class="letter__sign">love, Audrey &amp; the F&amp;E family xxoo</p>
+          <a class="btn btn--accent" href="#">On the Road</a>
+          <svg class="letter__hearts" viewBox="0 0 64 60" aria-hidden="true">
+            <path d="M16 55c-8-6-12-12-10-17 1-3 5-4 7-1 2-4 7-4 8 0 1 5-2 11-5 18z" fill="none" stroke="var(--mauve)" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M42 40c-9-8-15-17-12-24 2-5 8-5 11 0 3-7 11-7 13-1 2 7-4 16-12 25z" fill="var(--mauve)"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hand Picked for You -->
+    <section class="picks">
+      <div class="wrap">
+        <h2 class="section-title">Hand Picked for You</h2>
+        <p class="section-sub">Some favorites we think you’ll love.</p>
+        <div class="picks__grid">
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/pick-west-village.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">West Village</p>
+            <p class="card__price">$248</p>
+          </a>
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/pick-barry.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">Barry</p>
+            <p class="card__price">$248</p>
+          </a>
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/pick-new-eileen.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">New Eileen</p>
+            <p class="card__price">$248</p>
+          </a>
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/pick-monteray.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">Monteray</p>
+            <p class="card__price">$248</p>
+          </a>
+          <a class="card" href="#">
+            <div class="card__img"><img class="cover" src="summer-v2-assets/pick-shannon.jpg" alt="" loading="lazy"></div>
+            <p class="card__name">Shannon</p>
+            <p class="card__price">$248</p>
+          </a>
+        </div>
+        <a class="btn" href="#">Shop Your Picks</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer">
+      <div class="wrap--90 footer__inner">
+        <div class="footer__join">
+          <h3>Join Our Family</h3>
+          <p>15% off your first order</p>
+          <form class="signup" onsubmit="return false">
+            <input type="email" placeholder="Email" aria-label="Email">
+            <button type="submit" aria-label="Subscribe">
+              <svg class="icon icon--sm" viewBox="0 0 24 24" style="stroke-width:1.2"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+          <div class="social">
+            <svg viewBox="0 0 24 24" aria-label="Facebook"><path d="M22 2H2v20h10.6v-7.7H10v-3h2.6V9.1c0-2.6 1.6-4 3.9-4 1.1 0 2 .1 2.3.1v2.7h-1.6c-1.3 0-1.5.6-1.5 1.5v1.9h3l-.4 3h-2.6V22H22V2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-label="Instagram"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM17.3 5.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+            <svg viewBox="0 0 24 24" aria-label="Pinterest"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.8 0 1.2.6 1.2 1.4 0 .9-.5 2.1-.8 3.3-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1-2.9 0-4.5 2.1-4.5 4.4 0 .9.3 1.8.8 2.3l.1.4-.3 1.1c0 .2-.2.3-.4.2-1.3-.6-2.1-2.5-2.1-4 0-3.3 2.4-6.3 6.9-6.3 3.6 0 6.4 2.6 6.4 6 0 3.6-2.3 6.5-5.4 6.5-1.1 0-2.1-.6-2.4-1.2l-.7 2.5c-.2.9-.9 2.1-1.3 2.8A10 10 0 1 0 12 2z"/></svg>
+          </div>
+        </div>
+        <div class="footer__col">
+          <h4>Customer Care</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">EU Right of Withdrawal</a></li>
+            <li><a href="#">Loyalty Program</a></li>
+            <li><a href="#">Gift Cards</a></li>
+            <li><a href="#">Fit Guides</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>About Us</h4>
+          <ul>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">The $20M Giving Pledge</a></li>
+            <li><a href="#">Impact Report</a></li>
+            <li><a href="#">In the News</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Discover</h4>
+          <ul>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Best Sellers</a></li>
+            <li><a href="#">Dresses</a></li>
+            <li><a href="#">Women’s Fall Stripes</a></li>
+            <li><a href="#">Women’s Pants and Jeans</a></li>
+            <li><a href="#">Women’s Button-Up Shirts</a></li>
+            <li><a href="#">Sale</a></li>
+            <li><a href="#">The Journal</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Visit</h4>
+          <ul>
+            <li><a href="#">Madison Avenue Flagship in NYC</a></li>
+            <li><a href="#">Trunk Shows</a></li>
+            <li><a href="#">Store Locator</a></li>
+            <li><a href="#">The Frank &amp; Eileen Foundation</a></li>
+            <li><a href="#">ReLoved by Frank &amp; Eileen</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="signoff">
+      <div class="wrap--90">
+        <div class="signoff__row">
+          <div class="signoff__motto">
+            <span>Enter As Strangers,<br>Leave As Friends.</span>
+            <svg viewBox="0 0 54 54" aria-hidden="true">
+              <path d="M12 38c-7-5-10-10-8-14 1-3 5-3 7 0 2-3 6-3 7 1 1 4-2 8-6 13z" fill="none" stroke="var(--mauve-soft)" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M40 52c-7-6-11-12-9-17 1-3 6-3 8 0 2-4 7-3 8 1 1 5-3 10-7 16z" fill="var(--mauve-soft)"/>
+              <path d="M40 16c-3-3-5-6-4-8 .5-1.5 3-1.5 4 0 1-1.5 3-1.5 3.5.3.5 2.2-1.3 5-3.5 7.7z" fill="var(--mauve-soft)"/>
+            </svg>
+          </div>
+          <div class="badges">
+            <img src="summer-v2-assets/badge-w.png" alt="Certified woman-owned, woman-led">
+            <img src="summer-v2-assets/badge-20.png" alt="Giving $20 million over 10 years">
+          </div>
+        </div>
+        <p class="legal">
+          Frank &amp; Eileen 2026 Privacy<span>|</span>Terms<span>|</span>Accessibility<span>|</span>Data Requests<span>|</span>Cookie Preferences<span>|</span>Sitemap<span>|</span>Do Not Sell or Share My Info
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+
+
+
+  <!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->
+  <style>
+    #fe-accent-fab, #fe-accent-panel {
+      position: fixed; left: 22px; bottom: 22px; z-index: 9999;
+      font-family: var(--sans); color: var(--ink);
+    }
+    #fe-accent-fab {
+      width: 46px; height: 46px; padding: 0; font-size: 0; cursor: pointer;
+      border: 1px solid rgba(35, 31, 28, .18); border-radius: 50%;
+      background: linear-gradient(135deg, var(--mauve) 0 50%, var(--teal) 50% 100%);
+      box-shadow: 0 4px 14px rgba(35, 31, 28, .22);
+      transition: transform .15s ease;
+    }
+    #fe-accent-fab:hover { transform: scale(1.06); }
+    #fe-accent-panel {
+      width: 258px; padding: 14px 16px 16px;
+      background: #fff; border: 1px solid rgba(35, 31, 28, .14); border-radius: 8px;
+      box-shadow: 0 8px 28px rgba(35, 31, 28, .18);
+    }
+    .fe-accent__head { display: flex; align-items: center; justify-content: space-between; }
+    .fe-accent__title {
+      font-size: 10px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--ink-soft);
+    }
+    .fe-accent__close {
+      padding: 0 0 0 10px; border: 0; background: none; cursor: pointer;
+      font-size: 16px; line-height: 1; color: var(--ink-soft);
+    }
+    .fe-accent__close:hover { color: var(--ink); }
+
+    .fe-accent__field { margin-top: 12px; }
+    .fe-accent__label {
+      display: block; margin-bottom: 5px;
+      font-size: 11px; color: var(--ink-soft);
+    }
+    .fe-accent__picker { position: relative; }
+    .fe-accent__select {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; height: 30px; padding: 0 8px; cursor: pointer;
+      font-family: inherit; font-size: 11px; color: var(--ink); text-align: left;
+      background: #fff; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+    .fe-accent__select:hover { border-color: rgba(35, 31, 28, .4); }
+    .fe-accent__sw {
+      flex: 0 0 16px; width: 16px; height: 16px; border-radius: 3px;
+      border: 1px solid rgba(35, 31, 28, .15);
+    }
+    .fe-accent__name { flex: 1 1 auto; }
+    .fe-accent__hex {
+      color: var(--ink-soft); font-size: 10px; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .fe-accent__caret { flex: 0 0 auto; color: var(--ink-soft); font-size: 9px; }
+
+    .fe-accent__menu {
+      /* The panel is pinned to the bottom of the viewport, so menus open upward. */
+      position: absolute; left: 0; right: 0; bottom: calc(100% + 4px); z-index: 2;
+      max-height: 214px; overflow-y: auto; margin: 0; padding: 4px; list-style: none;
+      background: #fff; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+      box-shadow: 0 6px 20px rgba(35, 31, 28, .18);
+    }
+    .fe-accent__opt {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; padding: 6px 7px; cursor: pointer;
+      font-family: inherit; font-size: 11px; color: var(--ink); text-align: left;
+      background: none; border: 0; border-radius: 3px;
+    }
+    .fe-accent__opt:hover, .fe-accent__opt[aria-selected="true"] { background: rgba(35, 31, 28, .06); }
+    .fe-accent__opt .fe-accent__note {
+      color: var(--ink-soft); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .fe-accent__sep { margin: 4px 2px; border-top: 1px solid rgba(35, 31, 28, .12); }
+
+    /* An author `display` beats the UA's [hidden] rule, so restore it explicitly. */
+    #fe-accent-panel [hidden] { display: none !important; }
+
+    .fe-accent__custom { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .fe-accent__custom input[type="color"] {
+      flex: 0 0 30px; width: 30px; height: 26px; padding: 0; cursor: pointer;
+      background: none; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+    .fe-accent__custom input[type="text"] {
+      flex: 1 1 auto; min-width: 0; height: 26px; padding: 0 7px;
+      font-family: inherit; font-size: 11px; letter-spacing: .04em; color: var(--ink);
+      background: #fff; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+
+    .fe-accent__actions { display: flex; gap: 8px; margin-top: 16px; }
+    .fe-accent__btn {
+      flex: 1 1 0; height: 28px; cursor: pointer;
+      font-family: inherit; font-size: 10px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+      background: none; border: 1px solid rgba(35, 31, 28, .18); border-radius: 4px;
+    }
+    .fe-accent__btn:hover { color: var(--ink); border-color: rgba(35, 31, 28, .4); }
+    @media print { #fe-accent-fab, #fe-accent-panel { display: none !important; } }
+  </style>
+
+  <button id="fe-accent-fab" type="button" title="Accent colors" aria-label="Accent colors"></button>
+
+  <div id="fe-accent-panel" hidden>
+    <div class="fe-accent__head">
+      <span class="fe-accent__title">Accent Colors</span>
+      <button class="fe-accent__close" type="button" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="fe-accent__field" data-k="primary">
+      <span class="fe-accent__label">primary</span>
+      <div class="fe-accent__picker">
+        <button class="fe-accent__select" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="fe-accent__sw"></span>
+          <span class="fe-accent__name"></span>
+          <span class="fe-accent__hex"></span>
+          <span class="fe-accent__caret">&#9662;</span>
+        </button>
+        <ul class="fe-accent__menu" role="listbox" aria-label="Accent primary" hidden></ul>
+      </div>
+      <div class="fe-accent__custom" hidden>
+        <input type="color" aria-label="Custom accent primary">
+        <input type="text" maxlength="7" spellcheck="false" aria-label="Custom accent primary hex">
+      </div>
+    </div>
+
+    <div class="fe-accent__field" data-k="pop">
+      <span class="fe-accent__label">pop</span>
+      <div class="fe-accent__picker">
+        <button class="fe-accent__select" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="fe-accent__sw"></span>
+          <span class="fe-accent__name"></span>
+          <span class="fe-accent__hex"></span>
+          <span class="fe-accent__caret">&#9662;</span>
+        </button>
+        <ul class="fe-accent__menu" role="listbox" aria-label="Accent pop" hidden></ul>
+      </div>
+      <div class="fe-accent__custom" hidden>
+        <input type="color" aria-label="Custom accent pop">
+        <input type="text" maxlength="7" spellcheck="false" aria-label="Custom accent pop hex">
+      </div>
+    </div>
+
+    <div class="fe-accent__actions">
+      <button class="fe-accent__btn" type="button" data-act="copy">Copy link</button>
+      <button class="fe-accent__btn" type="button" data-act="reset">Reset</button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var KEY = 'fe-mockup-accents';
+    var root = document.documentElement;
+    var fab = document.getElementById('fe-accent-fab');
+    var panel = document.getElementById('fe-accent-panel');
+    var copyBtn = panel.querySelector('[data-act="copy"]');
+
+    /* Seasonal accents from the Figma palette. */
+    var PALETTE = [
+      { name: 'Mauve', hex: '#98685f', note: 'current' },
+      { name: 'Teal',  hex: '#537a82', note: 'current' },
+      { name: 'Green', hex: '#74825e', note: 'Aug' },
+      { name: 'Rose',  hex: '#9d6b62', note: 'Aug' },
+      { name: 'Rust',  hex: '#9e462d', note: 'Sept' },
+      { name: 'Tan',   hex: '#e2a671', note: 'Sept' },
+      { name: 'Blue',  hex: '#81a7af', note: 'Jan' }
+    ];
+
+    function clean(hex) {
+      if (typeof hex !== 'string') return null;
+      var h = hex.trim().replace(/^#/, '');
+      if (/^[0-9a-f]{3}$/i.test(h)) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return /^[0-9a-f]{6}$/i.test(h) ? '#' + h.toLowerCase() : null;
+    }
+
+    /* Mix toward black (0) to darken or white (255) to lighten. */
+    function mix(hex, amt, target) {
+      var n = parseInt(hex.slice(1), 16);
+      return '#' + [16, 8, 0].map(function (shift) {
+        var c = (n >> shift) & 255;
+        return ('0' + Math.round(c + (target - c) * amt).toString(16)).slice(-2);
+      }).join('');
+    }
+
+    function named(hex) {
+      for (var i = 0; i < PALETTE.length; i++) if (PALETTE[i].hex === hex) return PALETTE[i];
+      return null;
+    }
+
+    var cs = getComputedStyle(root);
+    var DEFAULTS = {
+      primary: clean(cs.getPropertyValue('--mauve')) || '#98685f',
+      pop: clean(cs.getPropertyValue('--teal')) || '#537a82'
+    };
+
+    function isDefault(s) {
+      return s.primary === DEFAULTS.primary && s.pop === DEFAULTS.pop;
+    }
+
+    function apply(s) {
+      root.style.setProperty('--mauve', s.primary);
+      root.style.setProperty('--mauve-dark', mix(s.primary, .12, 0));
+      root.style.setProperty('--mauve-soft', mix(s.primary, .18, 255));
+      root.style.setProperty('--teal', s.pop);
+      root.style.setProperty('--teal-script', s.pop);
+    }
+
+    function linkFor(s) {
+      var url = new URL(location.href);
+      url.searchParams.set('primary', s.primary.slice(1));
+      url.searchParams.set('pop', s.pop.slice(1));
+      return url.href;
+    }
+
+    function persist(s) {
+      try {
+        if (isDefault(s)) localStorage.removeItem(KEY);
+        else localStorage.setItem(KEY, s.primary + ',' + s.pop);
+      } catch (e) {}
+      /* file:// has an opaque origin, so replaceState throws there — Copy link still works. */
+      try {
+        if (isDefault(s)) {
+          var url = new URL(location.href);
+          url.searchParams.delete('primary');
+          url.searchParams.delete('pop');
+          history.replaceState(null, '', url.href);
+        } else {
+          history.replaceState(null, '', linkFor(s));
+        }
+      } catch (e) {}
+    }
+
+    function read() {
+      var q = new URLSearchParams(location.search);
+      var p = clean(q.get('primary'));
+      var o = clean(q.get('pop'));
+      if (p || o) return { primary: p || DEFAULTS.primary, pop: o || DEFAULTS.pop };
+      try {
+        var saved = (localStorage.getItem(KEY) || '').split(',');
+        p = clean(saved[0]);
+        o = clean(saved[1]);
+        if (p || o) return { primary: p || DEFAULTS.primary, pop: o || DEFAULTS.pop };
+      } catch (e) {}
+      return { primary: DEFAULTS.primary, pop: DEFAULTS.pop };
+    }
+
+    var state = read();
+
+    /* ---- one dropdown per accent ---- */
+    var fields = {};
+
+    Array.prototype.forEach.call(panel.querySelectorAll('.fe-accent__field'), function (el) {
+      var k = el.dataset.k;
+      var f = fields[k] = {
+        el: el,
+        button: el.querySelector('.fe-accent__select'),
+        menu: el.querySelector('.fe-accent__menu'),
+        sw: el.querySelector('.fe-accent__sw'),
+        name: el.querySelector('.fe-accent__name'),
+        hex: el.querySelector('.fe-accent__hex'),
+        custom: el.querySelector('.fe-accent__custom'),
+        colorIn: el.querySelector('input[type="color"]'),
+        textIn: el.querySelector('input[type="text"]')
+      };
+
+      PALETTE.forEach(function (c) {
+        var li = document.createElement('li');
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'fe-accent__opt';
+        b.setAttribute('role', 'option');
+        b.dataset.hex = c.hex;
+        b.innerHTML = '<span class="fe-accent__sw" style="background:' + c.hex + '"></span>' +
+          '<span class="fe-accent__name"></span>' +
+          '<span class="fe-accent__hex"></span>' +
+          '<span class="fe-accent__note"></span>';
+        b.querySelector('.fe-accent__name').textContent = c.name;
+        b.querySelector('.fe-accent__hex').textContent = c.hex.toUpperCase();
+        b.querySelector('.fe-accent__note').textContent = c.note;
+        b.addEventListener('click', function () {
+          set(k, c.hex);
+          closeMenu(f);
+          showCustom(f, false);
+        });
+        li.appendChild(b);
+        f.menu.appendChild(li);
+      });
+
+      var sep = document.createElement('li');
+      sep.className = 'fe-accent__sep';
+      f.menu.appendChild(sep);
+
+      var li = document.createElement('li');
+      var cb = document.createElement('button');
+      cb.type = 'button';
+      cb.className = 'fe-accent__opt';
+      cb.setAttribute('role', 'option');
+      cb.dataset.custom = '1';
+      cb.textContent = 'Custom…';
+      cb.addEventListener('click', function () {
+        closeMenu(f);
+        showCustom(f, true);
+        f.colorIn.focus();
+      });
+      li.appendChild(cb);
+      f.menu.appendChild(li);
+
+      f.button.addEventListener('click', function () {
+        var open = !f.menu.hidden;
+        closeAll();
+        if (!open) openMenu(f);
+      });
+
+      function onCustom(el2) {
+        return function () {
+          var v = clean(el2.value);
+          if (!v) return; /* mid-typing in the hex field — wait for a valid value */
+          set(k, v);
+        };
+      }
+      f.colorIn.addEventListener('input', onCustom(f.colorIn));
+      f.textIn.addEventListener('input', onCustom(f.textIn));
+      f.textIn.addEventListener('blur', function () { f.textIn.value = state[k]; });
+    });
+
+    function openMenu(f) {
+      f.menu.hidden = false;
+      f.button.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu(f) {
+      f.menu.hidden = true;
+      f.button.setAttribute('aria-expanded', 'false');
+    }
+    function closeAll() {
+      Object.keys(fields).forEach(function (k) { closeMenu(fields[k]); });
+    }
+    function showCustom(f, on) {
+      f.custom.hidden = !on;
+    }
+
+    function set(k, hex) {
+      state[k] = hex;
+      apply(state);
+      sync();
+      persist(state);
+    }
+
+    function sync() {
+      Object.keys(fields).forEach(function (k) {
+        var f = fields[k];
+        var hex = state[k];
+        var entry = named(hex);
+        f.sw.style.background = hex;
+        f.name.textContent = entry ? entry.name : 'Custom';
+        f.hex.textContent = hex.toUpperCase();
+        f.colorIn.value = hex;
+        f.textIn.value = hex;
+        if (!entry) showCustom(f, true);
+        Array.prototype.forEach.call(f.menu.querySelectorAll('.fe-accent__opt'), function (b) {
+          b.setAttribute('aria-selected', b.dataset.hex === hex ? 'true' : 'false');
+        });
+      });
+    }
+
+    apply(state);
+    sync();
+
+    panel.querySelector('[data-act="reset"]').addEventListener('click', function () {
+      state = { primary: DEFAULTS.primary, pop: DEFAULTS.pop };
+      apply(state);
+      Object.keys(fields).forEach(function (k) { showCustom(fields[k], false); });
+      sync();
+      persist(state);
+    });
+
+    copyBtn.addEventListener('click', function () {
+      var link = linkFor(state);
+      var done = function () {
+        copyBtn.textContent = 'Copied';
+        setTimeout(function () { copyBtn.textContent = 'Copy link'; }, 1400);
+      };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = link;
+        ta.style.cssText = 'position:fixed;top:-100px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { window.prompt('Copy this link:', link); }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(done, fallback);
+      else fallback();
+    });
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      fab.hidden = open;
+      if (!open) closeAll();
+      try { localStorage.setItem(KEY + '-open', open ? '1' : '0'); } catch (e) {}
+    }
+
+    fab.addEventListener('click', function () { setOpen(true); });
+    panel.querySelector('.fe-accent__close').addEventListener('click', function () { setOpen(false); });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.hidden && !panel.contains(e.target) && e.target !== fab) closeAll();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAll();
+    });
+
+    var wasOpen = false;
+    try { wasOpen = localStorage.getItem(KEY + '-open') === '1'; } catch (e) {}
+    setOpen(wasOpen);
+  })();
+  </script>
+
+</body>
+</html>

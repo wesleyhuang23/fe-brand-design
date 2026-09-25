@@ -34,7 +34,17 @@ To verify a change, use the `browser-automation` skill (`node ~/.claude/skills/b
 - The logo is `summer-v2-assets/logo.svg`, which combines the Figma wordmark and "EST 1947" vectors into one file.
 - `summer-v2-pdp.html` is the desktop product page (Eileen), from Figma node `8:404`. It copies the homepage's header, footer, product-card CSS and accent switcher, and its photos are `summer-v2-assets/pdp-*`. The rating hearts are Figma's vectors, inlined as `<symbol>`s so they follow `--teal`.
 - `summer-v2-pdp-mobile.html` is the mobile product page, from Figma node `8:234`. It copies the mobile homepage's shell (announce, header, `.rail`/`.dots`, footer accordion, switcher) and reuses the desktop PDP's photos, swatches and heart symbols. The button-up strip is its own 4-shirt crop, `pdp-button-up-guide-m.png`.
-- `index.html` is the Pages landing page. It links to all four mockups.
+- `index.html` is the Pages landing page. It has two groups: the original mockups, then a **2.0 Designs** section.
+
+### 2.0 designs
+
+A second round from the Figma file **"Frank & Eileen 3.0 2026"** (same file key `LqvLmsxbbYe0EyHVGyjxy3`). The pages are `home-2-0.html` (node `65:611`) and `home-mobile-2-0.html` (node `65:739`). They are copies of the matching v2 pages with the newer components, and they keep the accent switcher unchanged.
+
+- Desktop 2.0 swaps the nav: 11 links (Shop All … Learn) in Geist SemiBold 12px / `.1em` instead of 5 Shirley links, with Sale in the primary accent.
+- Mobile 2.0 puts the announcement bar and footer on a fixed denim `--denim: #496179` instead of the primary accent, and its footer headings are Geist ExtraBold (800).
+- `pdp-2-0.html` (node `65:12336`) and `pdp-mobile-2-0.html` (node `65:11236`) are the 2.0 product pages. These are redesigns, not variants: a 6-tile gallery (a 3-slide peek carousel on mobile), the full fabric catalogue of 16 groups and ~76 swatches in 43px cells, pill size chips `XXS–XL`, an editorial image band, and on desktop a 5-card carousel plus a wider 5-column footer. Their photos and swatches live in `summer-v2-assets/pdp20/` and both pages share them.
+- Figma's 3.0 nav shows a rust primary (`#9e462d`) and amber pop (`#aa6223`) while its letter and footer still show mauve. The pages keep the mauve/teal defaults; Rust is one click away in the switcher.
+- Known quirks in the 3.0 PDP frames, and what the pages do about them: the price reads `$288` in the title but `SELECT SIZE — $268` on the button (the pages use `$288` in both); the Yotpo review block sits 50px right of centre in Figma (the pages centre it); two mobile swatch cells have no image (the pages show the fabric, from the desktop export); the footer mixes Geist and Montserrat (the pages use Geist).
 
 ### Accent color switcher (duplicated in every page)
 
