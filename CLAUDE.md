@@ -51,7 +51,8 @@ A second round from the Figma file **"Frank & Eileen 3.0 2026"** (same file key 
 The switcher is a review tool, not part of the design. It runs from the comment `<!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->` to `</body>`, and that block is **identical in all four mockup files**. Don't edit only one copy. Edit the block once and re-inject it into every file. The docs file has a Python snippet for this (§3).
 
 - It sets inline styles for the accent variables on `:root`.
-- It also drives `--denim`, the third brand tone used by the 2.0 mobile announcement bar and footer and by the PDP's small blue link accents. The rule: while `pop` is at the file default, `--denim` keeps the file's own value (`#496179`, as in Figma); as soon as `pop` changes, `--denim` follows it, so no coloured band is left stranded. Reset restores the denim default.
+- Its palette is Mauve, Teal, Green, Rose, Rust, Tan, Blue and **Denim `#496179`** (the 2.0 header/footer tone), plus `Custom…`. Either slot can take any of them.
+- It also drives `--denim`, the third brand tone used by the 2.0 mobile announcement bar and footer and by the PDP's small blue link accents. It has no control of its own, so it follows whichever accent you change — primary wins if both changed — and keeps the file's own `#496179` until then. Reset restores that default. Without this, those bands sat on a fixed colour and the switcher appeared broken on the 2.0 mobile pages.
 - On load it takes state from the URL params first (`?primary=74825e&pop=81a7af`), then localStorage (`fe-mockup-accents`, `fe-mockup-accents-open`), then the file defaults. All pages use the same storage keys.
 
 ## Gotchas

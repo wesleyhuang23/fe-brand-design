@@ -673,7 +673,8 @@
       { name: 'Rose',  hex: '#9d6b62', note: 'Aug' },
       { name: 'Rust',  hex: '#9e462d', note: 'Sept' },
       { name: 'Tan',   hex: '#e2a671', note: 'Sept' },
-      { name: 'Blue',  hex: '#81a7af', note: 'Jan' }
+      { name: 'Blue',  hex: '#81a7af', note: 'Jan' },
+      { name: 'Denim', hex: '#496179', note: '2.0' }
     ];
 
     function clean(hex) {
@@ -714,9 +715,12 @@
       root.style.setProperty('--teal', s.pop);
       root.style.setProperty('--teal-script', s.pop);
       /* Some 2.0 screens put the announcement bar, the footer and small link accents on a
-         third brand tone, --denim. Leave each file's own default in place until the pop
-         accent is changed, then follow it, so the switcher drives every coloured band. */
-      root.style.setProperty('--denim', s.pop === DEFAULTS.pop ? '' : s.pop);
+         third brand tone, --denim, which has no control of its own. It follows whichever
+         accent you change (primary wins if both changed) and keeps the file's own default
+         until then, so no coloured band is left stranded. */
+      root.style.setProperty('--denim',
+        s.primary !== DEFAULTS.primary ? s.primary :
+        s.pop !== DEFAULTS.pop ? s.pop : '');
     }
 
     function linkFor(s) {
