@@ -806,6 +806,10 @@
       root.style.setProperty('--mauve-soft', mix(s.primary, .18, 255));
       root.style.setProperty('--teal', s.pop);
       root.style.setProperty('--teal-script', s.pop);
+      /* Some 2.0 screens put the announcement bar, the footer and small link accents on a
+         third brand tone, --denim. Leave each file's own default in place until the pop
+         accent is changed, then follow it, so the switcher drives every coloured band. */
+      root.style.setProperty('--denim', s.pop === DEFAULTS.pop ? '' : s.pop);
     }
 
     function linkFor(s) {
