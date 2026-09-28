@@ -144,6 +144,19 @@
       background: var(--teal); color: #fff; font-size: 7px; font-weight: 600; line-height: 11px; text-align: center;
     }
 
+    /* Quick links bar (Figma 97:19230): Geist SemiBold 11px / .1em, scrolls sideways, Sale in #d2815f */
+    .quicklinks {
+      display: flex; gap: 25px; align-items: center;
+      height: 38px; padding: 0 16px;
+      border-top: 1px solid #edebe7; border-bottom: 1px solid #edebe7;
+      font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+      overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .quicklinks::-webkit-scrollbar { display: none; }
+    .quicklinks::after { content: ''; flex: 0 0 1px; }
+    .quicklinks a { flex: none; }
+    .quicklinks a.is-sale { color: #d2815f; }
+
     /* ---------- Hero ---------- */
     .hero { position: relative; aspect-ratio: 390 / 520; color: #fff; }
     .hero > img { position: absolute; inset: 0; }
@@ -265,6 +278,20 @@
       </span>
     </div>
   </header>
+
+  <nav class="quicklinks" aria-label="Quick links">
+    <a href="#">Shop All</a>
+    <a href="#">New</a>
+    <a href="#">Featured</a>
+    <a href="#">Tops</a>
+    <a href="#">Sweaters</a>
+    <a href="#">Bottoms</a>
+    <a href="#">Dresses</a>
+    <a href="#">Sets</a>
+    <a href="#">Jackets &amp; Blazers</a>
+    <a href="#" class="is-sale">Sale</a>
+    <a href="#">Learn</a>
+  </nav>
 
   <main>
 

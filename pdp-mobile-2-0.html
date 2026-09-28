@@ -189,7 +189,9 @@
       overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--line);
       font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
     .cats::-webkit-scrollbar { display: none; }
-    .cats a { white-space: nowrap; }
+    .cats a { flex: none; white-space: nowrap; }
+    .cats a.is-sale { color: #d2815f; }
+    .cats::after { content: ''; flex: 0 0 1px; }
 
     .crumbs { display: flex; gap: 7px; padding: 15px 16px 9px; font-size: 12px; font-weight: 500; line-height: 13.2px; color: var(--grey); text-transform: capitalize; white-space: nowrap; }
 
@@ -365,7 +367,7 @@
     <symbol id="heart-outline" viewBox="0 0 13.341 16"><path d="M13.2667 1.98115C12.9118 0.234417 11.6037 -0.344443 9.94077 0.193795C8.08517 0.792966 6.77712 2.4483 6.06732 4.20519C4.78969 3.16934 3.43095 2.03193 2.05192 2.10302C0.0543518 2.19442 -0.259986 3.91068 0.16589 5.50509C0.855405 8.0541 2.41696 10.5523 3.98864 12.6444C4.93166 13.8935 6.60474 16.473 8.49076 15.9246C10.1639 15.4371 11.3705 12.8475 11.7964 11.3343C12.2831 9.59773 12.496 7.76975 12.8205 5.99255C13.0639 4.73328 13.5202 3.27089 13.2667 1.98115ZM11.2488 7.58695C10.8229 9.88208 9.83938 16.4425 6.41209 13.5787C4.39424 11.8929 2.88339 8.86654 1.87954 6.46985C1.63618 5.89099 0.977083 3.78882 1.89982 3.40291C2.53863 3.13887 3.63374 4.12395 4.0799 4.44892C5.16487 5.2512 6.10788 6.05348 7.33481 6.66281C8.06489 7.01825 8.70371 5.93162 7.97364 5.56602C7.68972 5.42384 7.39566 5.24105 7.1016 5.01763C7.4058 4.1341 7.83167 3.32167 8.49076 2.65141C8.8558 2.24519 9.71024 1.76813 10.2071 1.50409C11.3932 1.07902 11.6933 1.98115 12.0499 2.60063C12.5467 3.46385 11.4313 6.61203 11.2488 7.58695Z"/></symbol>
   </svg>
 
-    <nav class="cats" aria-label="Categories"><a href="#">Shop All</a><a href="#">New</a><a href="#">Featured</a><a href="#">Tops</a><a href="#">Sweaters</a></nav>
+    <nav class="cats" aria-label="Categories"><a href="#">Shop All</a><a href="#">New</a><a href="#">Featured</a><a href="#">Tops</a><a href="#">Sweaters</a><a href="#">Bottoms</a><a href="#">Dresses</a><a href="#">Sets</a><a href="#">Jackets &amp; Blazers</a><a href="#" class="is-sale">Sale</a><a href="#">Learn</a></nav>
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#">Shop All</a><span>/</span><a href="#">Tops</a><span>/</span><a href="#">Button-Ups &amp; Tops</a></nav>
 
     <!-- Gallery -->
