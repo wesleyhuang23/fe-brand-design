@@ -191,6 +191,9 @@
     .cats::-webkit-scrollbar { display: none; }
     .cats a { flex: none; white-space: nowrap; }
     .cats a.is-sale { color: #d2815f; }
+    .cats { cursor: grab; user-select: none; -webkit-user-select: none; }
+    .cats.is-dragging { cursor: grabbing; }
+    .cats.is-dragging a { pointer-events: none; }
     .cats::after { content: ''; flex: 0 0 1px; }
 
     .crumbs { display: flex; gap: 7px; padding: 15px 16px 9px; font-size: 12px; font-weight: 500; line-height: 13.2px; color: var(--grey); text-transform: capitalize; white-space: nowrap; }
@@ -634,6 +637,31 @@
 
 
 
+
+  <script>
+  /* Quick links: drag to scroll with a mouse (touch and trackpads scroll natively). */
+  document.querySelectorAll('.cats').forEach(function (bar) {
+    var startX = 0, startLeft = 0, dragging = false, moved = false;
+    bar.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      dragging = true; moved = false; startX = e.clientX; startLeft = bar.scrollLeft;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) < 4) return;
+      if (!moved) { moved = true; bar.classList.add('is-dragging'); }
+      bar.scrollLeft = startLeft - dx;
+    });
+    window.addEventListener('pointerup', function () {
+      if (!dragging) return;
+      dragging = false; bar.classList.remove('is-dragging');
+    });
+    /* A drag shouldn't also follow the link it started on. */
+    bar.addEventListener('click', function (e) { if (moved) { e.preventDefault(); moved = false; } }, true);
+    bar.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  });
+  </script>
 
   <!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->
   <style>

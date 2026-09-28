@@ -156,6 +156,9 @@
     .quicklinks::after { content: ''; flex: 0 0 1px; }
     .quicklinks a { flex: none; }
     .quicklinks a.is-sale { color: #d2815f; }
+    .quicklinks { cursor: grab; user-select: none; -webkit-user-select: none; }
+    .quicklinks.is-dragging { cursor: grabbing; }
+    .quicklinks.is-dragging a { pointer-events: none; }
 
     /* ---------- Hero ---------- */
     .hero { position: relative; aspect-ratio: 390 / 520; color: #fff; }
@@ -532,6 +535,31 @@
 
 
 
+
+  <script>
+  /* Quick links: drag to scroll with a mouse (touch and trackpads scroll natively). */
+  document.querySelectorAll('.quicklinks').forEach(function (bar) {
+    var startX = 0, startLeft = 0, dragging = false, moved = false;
+    bar.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      dragging = true; moved = false; startX = e.clientX; startLeft = bar.scrollLeft;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) < 4) return;
+      if (!moved) { moved = true; bar.classList.add('is-dragging'); }
+      bar.scrollLeft = startLeft - dx;
+    });
+    window.addEventListener('pointerup', function () {
+      if (!dragging) return;
+      dragging = false; bar.classList.remove('is-dragging');
+    });
+    /* A drag shouldn't also follow the link it started on. */
+    bar.addEventListener('click', function (e) { if (moved) { e.preventDefault(); moved = false; } }, true);
+    bar.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  });
+  </script>
 
   <!-- ========= Accent color switcher (mockup review tool, not part of the design) ========= -->
   <style>
